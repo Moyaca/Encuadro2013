@@ -1,16 +1,12 @@
 package com.example.ftp;
 
-import java.io.File;
-import java.io.FileInputStream;
+
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 
 
-import org.apache.commons.net.ftp.FTP;
-import org.apache.commons.net.ftp.FTPClient;
-import org.apache.commons.net.ftp.FTPReply;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -52,7 +48,6 @@ public class MainActivity extends Activity {
 		    	FtpExecute ftp = new FtpExecute();
 		    	String[] obra = {"151","Figari_pericon.jpg"};
 		    	ftp.execute(obra);
-		    	
 		    }
 		});
 	}
@@ -79,22 +74,28 @@ public class MainActivity extends Activity {
         protected String doInBackground(String... params) {
         	try {
         		MyFTP ftp = new MyFTP(getApplicationContext());
-		    	Bitmap bitmap=null;
+//		    	Bitmap bitmap=null;
 		    	if(ftp.LoginObras()){
-		    		bitmap = ftp.GetImgObra(params[0],params[1],true,0);
-		    		if(bitmap != null){
-		    			img.setImageBitmap(bitmap);
+//		    		bitmap = ftp.GetImgObra(params[0],params[1],true,0);
+//		    		if(bitmap != null){
+//		    			img.setImageBitmap(bitmap);
+//		    		}
+		    		if(ftp.subirImgObra(params[0],params[1])){
+		    			return "subio";
 		    		}
 		    	}
 			} catch (Exception e) {
 				System.out.println("error: " + e);
+				
 			}
-        	return "";
+        	return "no funco";
         }
  
         @Override
         protected void onPostExecute(String v) {
+        	//Toast.makeText(getApplicationContext(), v, Toast.LENGTH_LONG).show();
         	pDialog.dismiss();
+        	Toast.makeText(getApplicationContext(), v, Toast.LENGTH_LONG).show();
         }
     }
 
