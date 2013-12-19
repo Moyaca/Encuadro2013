@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.encuadroapp"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="18" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name="com.example.encuadroapp.MainActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.example.encuadroapp.Menu"
+            android:label="@string/title_activity_menu" >
+        </activity>
+        <activity
+            android:name="com.example.encuadroapp.MenPpal"
+            android:label="@string/title_activity_men_ppal" >
+        </activity>
+        <activity
+            android:name="com.example.encuadroapp.ListaObras"
+            android:label="@string/title_activity_lista_obras" >
+        </activity>
+        <activity
+            android:name="com.example.encuadroapp.ListaSalas"
+            android:label="@string/title_activity_lista_salas" >
+        </activity>
+        <activity
+            android:name="com.example.encuadroapp.ListaZonas"
+            android:label="@string/title_activity_lista_zonas" >
+        </activity>
+        <activity
+            android:name="com.example.encuadroapp.ContenidoObras"
+            android:label="@string/title_activity_contenido_obras" >
+        </activity>
+        <activity
+            android:name="com.example.encuadroapp.ContenidoSalas"
+            android:label="@string/title_activity_contenido_salas" >
+        </activity>
+        <activity
+            android:name="com.example.encuadroapp.ContenidoZonas"
+            android:label="@string/title_activity_contenido_zonas" >
+        </activity>
+        <activity
+            android:name="com.example.encuadroapp.Consumirws"
+            android:label="@string/title_activity_consumirws" >
+        </activity>
+        <activity
+            android:name="com.example.encuadroapp.MyFTP"
+            android:label="@string/title_activity_my_ftp" >
+        </activity>
+    </application>
+
+</manifest>
