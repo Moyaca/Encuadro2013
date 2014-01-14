@@ -13,6 +13,7 @@ import org.apache.commons.net.ftp.FTPReply;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 
 public class MyFTP {
 	
@@ -346,22 +347,23 @@ public class MyFTP {
 			    	fos.close();
 			    	result = true;
 				} catch (Exception e) {
-					System.out.println("error descarga :" + e);
+					String error=String.valueOf(e);
+					System.out.println(e);
 					//Toast.makeText(context, "Descargar error: " + error, Toast.LENGTH_LONG).show(); 
 					return false;
 				}
             return result;
    		}
 		
-		public boolean subirImgSala(String name, String path){
+		public boolean subirImgSala(String id, String name){
 			boolean result = false;
 			File file = null;
 			if(IfLoginSalas()){
 					try {
-					file = new File(path);
+					file = new File(context.getCacheDir(), name);
 					if(file.exists()){
 						System.out.println("Existe");
-						result =subirImg(name, salaClient, path);
+						result =subirImg(id, name, salaClient, file);
 						file.delete();
 					}else{
 						file.delete();
@@ -376,15 +378,16 @@ public class MyFTP {
 			return result;
 		}
 		
-		public boolean subirImgObra(String name, String path){
+		public boolean subirImgObra(String id, String name){
 			boolean result = false;
 			File file = null;
 			if(IfLoginObras()){
 					try {
-			    	file = new File(path);
+					file = new File(context.getCacheDir(), name);
+					descargarImg(id, name, zonaClient);
 					if(file.exists()){
 						System.out.println("Existe");
-						result =subirImg(name, obraClient, path);
+						result =subirImg(id, name, obraClient,file);
 						file.delete();
 					}else{
 						file.delete();
@@ -398,15 +401,15 @@ public class MyFTP {
 			}
 			return result;
 		}
-		public boolean subirImgZona(String name, String path){
+		public boolean subirImgZona(String id, String name){
 			boolean result = false;
 			File file = null;
 			if(IfLoginZonas()){
 					try {
-					file = new File(path);
+					file = new File(context.getCacheDir(), name);
 					if(file.exists()){
 						System.out.println("Existe");
-						result =subirImg(name, zonaClient, path);
+						result =subirImg(id, name, zonaClient,file);
 						file.delete();
 					}else{
 						file.delete();
@@ -421,15 +424,12 @@ public class MyFTP {
 			return result;
 		}
 		
-		public boolean subirImg(String name, FTPClient cliente, String path){
+		public boolean subirImg(String id, String name, FTPClient cliente, File file){
 			boolean result = false;
-			File file = null;
-			try{				
-				file = new File(path);
-//				FileInputStream srcFileStream = context.openFileInput(context.getCacheDir()+ "/" + name);
-				FileInputStream srcFileStream = new FileInputStream(file);
+			try{
+				FileInputStream srcFileStream = new FileInputStream(file);  
 				System.out.print("cojio la imagen");
-				result = cliente.storeFile("/" + name, srcFileStream);  
+				result = cliente.storeFile("/" + id + "/" +name, srcFileStream);  
 				System.out.print("subio la imagen");
 				srcFileStream.close();
 			}catch(Exception e){

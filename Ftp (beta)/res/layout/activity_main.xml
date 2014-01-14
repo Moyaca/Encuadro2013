@@ -8,32 +8,37 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity" >
 
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Bajando por FTP..." />
+
     <ImageView
         android:id="@+id/imageView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/textView1"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="14dp"
         android:src="@drawable/ic_launcher" />
 
     <Button
-        android:id="@+id/btnComenzar"
+        android:id="@+id/btnBajar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:text="Comenzar" />
+        android:layout_alignLeft="@+id/imageView1"
+        android:layout_below="@+id/textView1"
+        android:layout_marginTop="54dp"
+        android:text="Descargar" />
 
     <TextView
-        android:id="@+id/txtNombre"
+        android:id="@+id/txtConecta"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/btnComenzar"
-        android:layout_alignBottom="@+id/btnComenzar"
-        android:layout_marginLeft="44dp"
-        android:layout_toRightOf="@+id/btnComenzar"
-        android:text="ID:" />
+        android:layout_below="@+id/textView1"
+        android:layout_marginLeft="30dp"
+        android:layout_toRightOf="@+id/btnBajar"
+        android:text="Conectando?" />
 
 </RelativeLayout>

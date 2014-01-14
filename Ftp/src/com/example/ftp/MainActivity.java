@@ -1,21 +1,32 @@
 package com.example.ftp;
 
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 
+import org.apache.commons.net.ftp.FTPClient;
 
 
+
+import android.R.bool;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.MediaScannerConnection;
+import android.media.MediaScannerConnection.MediaScannerConnectionClient;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -26,28 +37,41 @@ import android.widget.Toast;
 
 public class MainActivity extends Activity {
 	
-	private TextView txtConectar;
-	private Button btnBajar;
+	private TextView txtNom;
+	private Button btnC;
 	public FTPClient mFTPClient = null;
 	ProgressDialog pDialog;
 	int ftplogin=0;
+	
 	String ftplog=String.valueOf(ftplogin);
 	String error="ninguno!";
 	ImageView img;
+	
+	private String name = "";
+	private static int TAKE_PICTURE = 1;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		img = (ImageView)findViewById(R.id.imageView1);
-		btnBajar = (Button) findViewById(R.id.btnBajar);
-		txtConectar = (TextView) findViewById(R.id.txtConecta);
 		
-		btnBajar.setOnClickListener(new View.OnClickListener(){
+		img = (ImageView)findViewById(R.id.imageView1);
+		btnC = (Button) findViewById(R.id.btnComenzar);
+		txtNom = (TextView) findViewById(R.id.txtNombre);
+		
+		name = Environment.getExternalStorageDirectory() + "/test.jpg";
+		 
+		btnC.setOnClickListener(new View.OnClickListener(){
 		    public void onClick(View view){
 		    	
-		    	FtpExecute ftp = new FtpExecute();
-		    	String[] obra = {"151","Figari_pericon.jpg"};
-		    	ftp.execute(obra);
+                Intent intent =  new Intent(MediaStore.ACTION_IMAGE_CAPTURE);    	
+                int code = TAKE_PICTURE;
+		    	
+                Uri output = Uri.fromFile(new File(name));
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, output);
+                
+                startActivityForResult(intent, code);
+
 		    }
 		});
 	}
@@ -58,7 +82,35 @@ public class MainActivity extends Activity {
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
-	
+	 @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		 
+		
+     	
+		 if (requestCode == TAKE_PICTURE) {
+     		Toast.makeText(this, "TAKE_PICTURE", Toast.LENGTH_LONG).show();
+    		ImageView iv = (ImageView)findViewById(R.id.imageView1);
+	        iv.setImageBitmap(BitmapFactory.decodeFile(name));
+	        
+	        //llamo al hilo para subir la imajen
+            System.out.print("antes del execute");
+	    	FtpExecute ftp = new FtpExecute();
+	    	String[] obra = {"test.jpg",name};
+	    	ftp.execute(obra);
+	    	
+	        new MediaScannerConnectionClient() {
+	        	
+	        	private MediaScannerConnection msc = null; {
+	        		msc = new MediaScannerConnection(getApplicationContext(), this); msc.connect();
+	        	}
+	        	public void onMediaScannerConnected() {
+	        		msc.scanFile(name, null);
+	        	}
+	                    public void onScanCompleted(String path, Uri uri) {
+	                        msc.disconnect();
+	                    }
+            };   
+		}
+	 }
 	class FtpExecute extends AsyncTask<String,String,String>{
 		 
         @Override
@@ -72,68 +124,35 @@ public class MainActivity extends Activity {
  
         @Override
         protected String doInBackground(String... params) {
+        	String result="no funco";
         	try {
         		MyFTP ftp = new MyFTP(getApplicationContext());
-//		    	Bitmap bitmap=null;
-		    	if(ftp.LoginObras()){
-//		    		bitmap = ftp.GetImgObra(params[0],params[1],true,0);
-//		    		if(bitmap != null){
-//		    			img.setImageBitmap(bitmap);
-//		    		}
+        		Consumirws ws = new Consumirws();
+		    	if(ftp.LoginObras()){	
+		    		result="Login";
 		    		if(ftp.subirImgObra(params[0],params[1])){
-		    			return "subio";
+		    			result="subio";
+
+//		    			result = ws.getNombreObraDescriptor(Integer.parseInt(params[2]), params[0]);
+		    			result = ws.getNombreObraDescriptor(161, params[0]);
 		    		}
 		    	}
 			} catch (Exception e) {
-				System.out.println("error: " + e);
+				result="Error: "+e;
 				
 			}
-        	return "no funco";
+        	return result;
         }
  
         @Override
         protected void onPostExecute(String v) {
         	//Toast.makeText(getApplicationContext(), v, Toast.LENGTH_LONG).show();
         	pDialog.dismiss();
-        	Toast.makeText(getApplicationContext(), v, Toast.LENGTH_LONG).show();
+        	System.out.print(" resultado :"+v);
+        	txtNom.setText("ID: " + v);
+        	Toast.makeText(getApplicationContext(), "resultado:" +v, Toast.LENGTH_LONG).show();
+        	
         }
     }
 
-	public void bajarArchivo() throws SocketException, UnknownHostException, IOException {
-		FTPClient client = new FTPClient();
-		FileOutputStream fos = null;
-		
-		try {
-	    	Toast.makeText(getApplicationContext(), "BajarArchivo!", Toast.LENGTH_LONG).show();
-			
-	    	client.connect("ftp://10.0.2.109");
-	    	client.login("obras", "12345678");
-
-	    	// Create an OutputStream for the file
-	    	String filename = "test.jpg";
-	    	fos = new FileOutputStream(filename);
-	    	 
-	    	// Fetch file from server 
-	    	client.retrieveFile("/153/imagen/" + "figari_toque.jpg", fos);
-	        
-	        Toast.makeText(getApplicationContext(), "FTP Correcto!", Toast.LENGTH_LONG).show();
-	 
-	    } 
-		
-		catch (Exception e){
-	    	Toast.makeText(getApplicationContext(), "Excepcion!"+e, Toast.LENGTH_LONG).show();
-	        Log.i("consola","Ups...");
-	    }
-		
-		try {
-			if (fos != null) {
-				fos.close();
-			}
-			client.disconnect();
-		} 
-		
-		catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
 }
