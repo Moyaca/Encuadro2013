@@ -1,4 +1,4 @@
-package com.example.ftp;
+package com.example.qr;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -220,8 +220,10 @@ public class MyFTP {
 							FileInputStream streamIn = new FileInputStream(file);
 				       		img = BitmapFactory.decodeStream(streamIn); //This gets the image
 				       		streamIn.close();
+				       		file.delete();
 						}else{
 							System.out.println("no existe");
+							file.delete();
 							if(descargar){
 								if(descargarImg(id, name, obraClient)){
 									System.out.println("descargo");
@@ -259,8 +261,10 @@ public class MyFTP {
 							FileInputStream streamIn = new FileInputStream(file);
 				       		img = BitmapFactory.decodeStream(streamIn); //This gets the image
 				       		streamIn.close();
+				       		file.delete();
 						}else{
 							System.out.println("no existe");
+							file.delete();
 							if(descargar){
 								if(descargarImg(id, name, salaClient)){
 									System.out.println("descargo");
@@ -298,8 +302,10 @@ public class MyFTP {
 							FileInputStream streamIn = new FileInputStream(file);
 				       		img = BitmapFactory.decodeStream(streamIn); //This gets the image
 				       		streamIn.close();
+				       		file.delete();
 						}else{
 							System.out.println("no existe");
+							file.delete();
 							if(descargar){
 								if(descargarImg(id, name, zonaClient)){
 									System.out.println("descargo");
@@ -325,222 +331,18 @@ public class MyFTP {
 			}
 			return img;
 		}
-
-		public Boolean getAudioObra(String id, String name, boolean descargar, int loop){
-			Boolean result= false;
-			File file = null;
-			if(loop<=10){
-				if(IfLoginObras()){
-					try {
-						file = new File(context.getCacheDir(), name);
-						if(file.exists()){
-							System.out.println("Existe");
-				       		result = true;
-						}else{
-							System.out.println("no existe");
-							if(descargar){
-								if(descargarAudio(id, name, obraClient)){
-									result= true;
-								}else{
-									System.out.println("else de la descarga");
-									descargar = true;
-									result = getAudioObra(id, name, descargar,loop+1);
-								}
-							}else{
-								result = getAudioObra(id, name, descargar,loop+1);
-							}
-						}
-					} catch (Exception e) {
-						System.out.println(e);
-			        	return result;
-					}
-				}
-			}
-			return result;
-		}
-		public Boolean getAudioSala(String id, String name, boolean descargar, int loop){
-			Boolean result= false;
-			File file = null;
-			if(loop<=10){
-				if(IfLoginSalas()){
-					try {
-						file = new File(context.getCacheDir(), name);
-						if(file.exists()){
-							System.out.println("Existe");
-				       		result = true;
-						}else{
-							System.out.println("no existe");
-							if(descargar){
-								if(descargarAudio(id, name, salaClient)){
-									result= true;
-								}else{
-									System.out.println("else de la descarga");
-									descargar = true;
-									result = getAudioSala(id, name, descargar,loop+1);
-								}
-							}else{
-								result = getAudioSala(id, name, descargar,loop+1);
-							}
-						}
-					} catch (Exception e) {
-						System.out.println(e);
-			        	return result;
-					}
-				}
-			}
-			return result;
-		}
-		public Boolean getAudioZona(String id, String name, boolean descargar, int loop){
-			Boolean result= false;
-			File file = null;
-			if(loop<=10){
-				if(IfLoginZonas()){
-					try {
-						file = new File(context.getCacheDir(), name);
-						if(file.exists()){
-							System.out.println("Existe");
-				       		result = true;
-						}else{
-							System.out.println("no existe");
-							if(descargar){
-								if(descargarAudio(id, name, zonaClient)){
-									result= true;
-								}else{
-									System.out.println("else de la descarga");
-									descargar = true;
-									result = getAudioZona(id, name, descargar,loop+1);
-								}
-							}else{
-								result = getAudioZona(id, name, descargar,loop+1);
-							}
-						}
-					} catch (Exception e) {
-						System.out.println(e);
-			        	return result;
-					}
-				}
-			}
-			return result;
-		}
-
-		public Boolean getVideoObra(String id, String name, boolean descargar, int loop){
-			Boolean result= false;
-			File file = null;
-			if(loop<=10){
-				if(IfLoginObras()){
-					try {
-						file = new File(context.getCacheDir(), name);
-						if(file.exists()){
-							System.out.println("Existe");
-				       		result = true;
-						}else{
-							System.out.println("no existe");
-							if(descargar){
-								if(descargarVideo(id, name, obraClient)){
-									result= true;
-								}else{
-									System.out.println("else de la descarga");
-									descargar = true;
-									result = getVideoObra(id, name, descargar,loop+1);
-								}
-							}else{
-								result = getVideoObra(id, name, descargar,loop+1);
-							}
-						}
-					} catch (Exception e) {
-						System.out.println(e);
-			        	return result;
-					}
-				}
-			}
-			return result;
-		}
-		public Boolean getVideoSala(String id, String name, boolean descargar, int loop){
-			Boolean result= false;
-			File file = null;
-			if(loop<=10){
-				if(IfLoginSalas()){
-					try {
-						file = new File(context.getCacheDir(), name);
-						if(file.exists()){
-							System.out.println("Existe");
-				       		result = true;
-						}else{
-							System.out.println("no existe");
-							if(descargar){
-								if(descargarVideo(id, name, salaClient)){
-									result= true;
-								}else{
-									System.out.println("else de la descarga");
-									descargar = true;
-									result = getVideoSala(id, name, descargar,loop+1);
-								}
-							}else{
-								result = getVideoSala(id, name, descargar,loop+1);
-							}
-						}
-					} catch (Exception e) {
-						System.out.println(e);
-			        	return result;
-					}
-				}
-			}
-			return result;
-		}
-		public Boolean getVideoZona(String id, String name, boolean descargar, int loop){
-			Boolean result= false;
-			File file = null;
-			if(loop<=10){
-				if(IfLoginZonas()){
-					try {
-						file = new File(context.getCacheDir(), name);
-						if(file.exists()){
-							System.out.println("Existe");
-				       		result = true;
-						}else{
-							System.out.println("no existe");
-							if(descargar){
-								if(descargarVideo(id, name, zonaClient)){
-									result= true;
-								}else{
-									System.out.println("else de la descarga");
-									descargar = true;
-									result = getVideoZona(id, name, descargar,loop+1);
-								}
-							}else{
-								result = getVideoZona(id, name, descargar,loop+1);
-							}
-						}
-					} catch (Exception e) {
-						System.out.println(e);
-			        	return result;
-					}
-				}
-			}
-			return result;
-		}
-		
+			
 		public boolean descargarImg(String id, String name, FTPClient cliente){
 			boolean result = false;
 				try {
 					FileOutputStream fos = null;
 		            fos = new FileOutputStream(context.getCacheDir() + "/" + name);
 		            cliente.retrieveFile("/" + id + "/imagen/" + name, fos);
-		            fos.close();
-			    	result = true;
-				} catch (Exception e) {
-					System.out.println("error descarga :" + e);
-					//Toast.makeText(context, "Descargar error: " + error, Toast.LENGTH_LONG).show(); 
-					return false;
-				}
-            return result;
-   		}	
-		public boolean descargarAudio(String id, String name, FTPClient cliente){
-			boolean result = false;
-				try {
-					FileOutputStream fos = null;
-		            fos = new FileOutputStream(context.getCacheDir() + "/" + name);
-		            cliente.retrieveFile("/" + id + "/audio/" + name, fos);
+//			    	File file = new File(context.getCacheDir().getPath());
+//			    	File[] s = file.listFiles();
+//			    	for(int i=0;i<=s.length;i++){
+//				    	System.out.println(s[i]);	
+//			    	}
 			    	fos.close();
 			    	result = true;
 				} catch (Exception e) {
@@ -550,22 +352,7 @@ public class MyFTP {
 				}
             return result;
    		}
-		public boolean descargarVideo(String id, String name, FTPClient cliente){
-			boolean result = false;
-				try {
-					FileOutputStream fos = null;
-		            fos = new FileOutputStream(context.getCacheDir() + "/" + name);
-		            cliente.retrieveFile("/" + id + "/video/" + name, fos);
-			    	fos.close();
-			    	result = true;
-				} catch (Exception e) {
-					System.out.println("error descarga :" + e);
-					//Toast.makeText(context, "Descargar error: " + error, Toast.LENGTH_LONG).show(); 
-					return false;
-				}
-            return result;
-   		}
-
+		
 		public boolean subirImgSala(String name, String path){
 			boolean result = false;
 			File file = null;
@@ -588,6 +375,7 @@ public class MyFTP {
 			}
 			return result;
 		}
+		
 		public boolean subirImgObra(String name, String path){
 			boolean result = false;
 			File file = null;

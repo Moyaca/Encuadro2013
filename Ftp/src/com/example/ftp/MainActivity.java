@@ -1,24 +1,11 @@
 package com.example.ftp;
 
 
-import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.SocketException;
-import java.net.UnknownHostException;
-
 import org.apache.commons.net.ftp.FTPClient;
-
-
-
-import android.R.bool;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaScannerConnection;
 import android.media.MediaScannerConnection.MediaScannerConnectionClient;
@@ -27,7 +14,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -39,6 +25,7 @@ public class MainActivity extends Activity {
 	
 	private TextView txtNom;
 	private Button btnC;
+	private Button btnAudio;
 	public FTPClient mFTPClient = null;
 	ProgressDialog pDialog;
 	int ftplogin=0;
@@ -57,6 +44,7 @@ public class MainActivity extends Activity {
 		
 		img = (ImageView)findViewById(R.id.imageView1);
 		btnC = (Button) findViewById(R.id.btnComenzar);
+		btnAudio = (Button) findViewById(R.id.button1);
 		txtNom = (TextView) findViewById(R.id.txtNombre);
 		
 		name = Environment.getExternalStorageDirectory() + "/test.jpg";
@@ -73,6 +61,14 @@ public class MainActivity extends Activity {
                 startActivityForResult(intent, code);
 
 		    }
+		});
+		btnAudio.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent(MainActivity.this,Multimedia.class);
+				startActivity(intent);
+			}
 		});
 	}
 

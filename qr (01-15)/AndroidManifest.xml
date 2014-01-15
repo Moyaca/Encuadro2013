@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.qr"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="18" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <application
+        android:allowBackup="true"
+        android:debuggable="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:requiredForAllUsers="true"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name="com.example.qr.MainActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.google.zxing.client.android.CaptureActivity"
+            android:clearTaskOnLaunch="true"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="landscape"
+            android:stateNotNeeded="true"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:windowSoftInputMode="stateAlwaysHidden" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.example.qr.SCAN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.example.qr.ContenidoObras"
+            android:label="@string/title_activity_contenido_obras" >
+        </activity>
+        <activity
+            android:name="com.example.qr.MenPpal"
+            android:label="@string/title_activity_men_ppal" >
+        </activity>
+        <activity
+            android:name="com.example.qr.ContenidoSalas"
+            android:label="@string/title_activity_contenido_salas" >
+        </activity>
+        <activity
+            android:name="com.example.qr.ContenidoZonas"
+            android:label="@string/title_activity_contenido_zonas" >
+        </activity>
+        <activity
+            android:name="com.example.qr.ListaObras"
+            android:label="@string/title_activity_lista_obras" >
+        </activity>
+        <activity
+            android:name="com.example.qr.ListaSalas"
+            android:label="@string/title_activity_lista_salas" >
+        </activity>
+        <activity
+            android:name="com.example.qr.ListaZonaz"
+            android:label="@string/title_activity_lista_zonaz" >
+        </activity>
+        <activity
+            android:name="com.example.qr.MenPpalAuto"
+            android:label="@string/title_activity_men_ppal_auto" >
+        </activity>
+    </application>
+
+</manifest>

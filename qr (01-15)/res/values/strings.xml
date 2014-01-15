@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">qr</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_mostrar_qr">Mostrar_qr</string>
+    <string name="title_activity_otrocoso">MainActivity</string>
+    <string name="title_activity_contenido_obras">ContenidoObras</string>
+    <string name="title_activity_men_ppal">Menu Principar</string>
+    <string name="title_activity_contenido_salas">ContenidoSalas</string>
+    <string name="title_activity_contenido_zonas">ContenidoZonas</string>
+    <string name="title_activity_lista_obras">ListaObras</string>
+    <string name="title_activity_lista_salas">ListaSalas</string>
+    <string name="title_activity_lista_zonaz">ListaZonaz</string>
+    <string name="title_activity_men_ppal_auto">MenPpalAuto</string>
+
+</resources>

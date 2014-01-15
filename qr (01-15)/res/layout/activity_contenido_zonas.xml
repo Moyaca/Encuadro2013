@@ -6,42 +6,44 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".MainActivity" >
-
-    <ImageView
-        android:id="@+id/imageView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:src="@drawable/ic_launcher" />
-
-    <Button
-        android:id="@+id/btnComenzar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:text="Comenzar" />
+    tools:context=".ContenidoObras" >
 
     <TextView
-        android:id="@+id/txtNombre"
+        android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/btnComenzar"
-        android:layout_alignBottom="@+id/btnComenzar"
-        android:layout_marginLeft="44dp"
-        android:layout_toRightOf="@+id/btnComenzar"
-        android:text="ID:" />
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="44dp"
+        android:layout_marginTop="53dp"
+        android:text="Nombre Obra:" />
 
-    <Button
-        android:id="@+id/button1"
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView1"
+        android:layout_below="@+id/textView1"
+        android:layout_marginTop="66dp"
+        android:text="Autor:" />
+
+    <TextView
+        android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:text="audio" />
+        android:layout_below="@+id/textView2"
+        android:layout_marginLeft="17dp"
+        android:layout_marginTop="34dp"
+        android:text="Descripción:" />
+
+    <Button
+        android:id="@+id/btnEscO"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/textView3"
+        android:layout_marginBottom="30dp"
+        android:text="Salas" />
 
 </RelativeLayout>
