@@ -12,9 +12,9 @@
         android:id="@+id/btnEscO"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/btnEscS"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:layout_alignRight="@+id/btnEscS"
         android:layout_marginTop="60dp"
         android:text="Manual" />
 
@@ -22,19 +22,10 @@
         android:id="@+id/btnEscS"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/btnObrasSala"
-        android:layout_alignRight="@+id/btnObrasSala"
+        android:layout_alignLeft="@+id/btnEscO"
+        android:layout_alignParentRight="true"
         android:layout_below="@+id/btnEscO"
         android:layout_marginTop="34dp"
         android:text="QR" />
-
-    <Button
-        android:id="@+id/btnObrasSala"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/btnEscS"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="34dp"
-        android:text="Escaneo Cuadro" />
 
 </RelativeLayout>

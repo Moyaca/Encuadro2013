@@ -55,50 +55,7 @@ public class MainActivity extends Activity {
 					startActivity(inten);
 				}
 		});
-		
-		b2.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-//				if(sala==""){
-//					
-//				}else{
-	                Intent intent =  new Intent(MediaStore.ACTION_IMAGE_CAPTURE);    	
-	                int code = TAKE_PICTURE;
-			    	
-	                Uri output = Uri.fromFile(new File(name));
-	                intent.putExtra(MediaStore.EXTRA_OUTPUT, output);
-	                
-	                startActivityForResult(intent, code);
-//				}
-			}
-	});
 	        
-	}
-	@Override
-public void onActivityResult(int requestCode, int resultCode, Intent intent) { 
-		 Toast.makeText(getApplicationContext(),
-                 "Entro", Toast.LENGTH_SHORT).show();
-		 if (requestCode == TAKE_PICTURE) {
-	     		Toast.makeText(this, "TAKE_PICTURE", Toast.LENGTH_LONG).show();
-
-		      //llamo al hilo para subir la imajen
-	            System.out.print("antes del execute");
-		    	FtpExecute ftp = new FtpExecute();
-		    	String[] obra = {"test.jpg",name};
-		    	ftp.execute(obra);
-		        new MediaScannerConnectionClient() {
-		        	
-		        	private MediaScannerConnection msc = null; {
-		        		msc = new MediaScannerConnection(getApplicationContext(), this); msc.connect();
-		        	}
-		        	public void onMediaScannerConnected() {
-		        		msc.scanFile(name, null);
-		        	}
-		                    public void onScanCompleted(String path, Uri uri) {
-		                        msc.disconnect();
-		                    }
-	            };   
-			}
 	}
 	
 	@Override
@@ -108,51 +65,5 @@ public void onActivityResult(int requestCode, int resultCode, Intent intent) {
 		return true;
 	}
 	
-	
-	class FtpExecute extends AsyncTask<String,String,String>{
-		 
-        @Override
-        protected void onPreExecute() {
-        	pDialog = new ProgressDialog(MainActivity.this);
-			pDialog.setMessage("Espere por favor...");
-			pDialog.setIndeterminate(false);
-			pDialog.setCancelable(false);
-			pDialog.show();
-        }
- 
-        @Override
-        protected String doInBackground(String... params) {
-        	String result="no funco";
-        	try {
-        		MyFTP ftp = new MyFTP(getApplicationContext());
-        		Consumirws ws = new Consumirws();
-		    	if(ftp.LoginObras()){	
-		    		result="Login";
-		    		if(ftp.subirImgObra(params[0],params[1])){
-		    			result="subio";
-		    			String idObra = ws.getNombreObraDescriptor(161, params[0]);
-//		    			result = ws.getNombreObraDescriptor(Integer.parseInt(params[2]), params[0]);
-		    			result = ws.getDataObraId(Integer.parseInt(idObra));
-		    		}
-		    	}
-			} catch (Exception e) {
-				result="Error: "+e;
-				
-			}
-        	return result;
-        }
- 
-        @Override
-        protected void onPostExecute(String v) {
-        	//Toast.makeText(getApplicationContext(), v, Toast.LENGTH_LONG).show();
-        	pDialog.dismiss();
-        	System.out.print(" resultado :"+v);
-//        	Toast.makeText(getApplicationContext(), "resultado:" +v, Toast.LENGTH_LONG).show();
-        	Intent i= new Intent(MainActivity.this, ContenidoObras.class);
-			i.putExtra("result",v);	
-			startActivity(i);
-        	
-        }
-    }
 }
 
