@@ -39,12 +39,28 @@
 
     <ImageView
         android:id="@+id/imageView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="200px"
+        android:layout_height="200px"
         android:layout_above="@+id/textView3"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_toLeftOf="@+id/textView1"
         android:src="@drawable/ic_launcher" />
+
+    <Button
+        android:id="@+id/btnPlay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:text="Play" />
+
+    <Button
+        android:id="@+id/btnPause"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:text="Pause" />
 
 </RelativeLayout>

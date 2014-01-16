@@ -352,7 +352,7 @@ public class MyFTP {
 						}
 					} catch (Exception e) {
 						System.out.println(e);
-			        	return result;
+			        	return false;
 					}
 				}
 			}
@@ -384,7 +384,7 @@ public class MyFTP {
 						}
 					} catch (Exception e) {
 						System.out.println(e);
-			        	return result;
+			        	return false;
 					}
 				}
 			}
@@ -416,7 +416,7 @@ public class MyFTP {
 						}
 					} catch (Exception e) {
 						System.out.println(e);
-			        	return result;
+			        	return false;
 					}
 				}
 			}
@@ -449,7 +449,7 @@ public class MyFTP {
 						}
 					} catch (Exception e) {
 						System.out.println(e);
-			        	return result;
+			        	return false;
 					}
 				}
 			}
@@ -481,7 +481,7 @@ public class MyFTP {
 						}
 					} catch (Exception e) {
 						System.out.println(e);
-			        	return result;
+			        	return false;
 					}
 				}
 			}
@@ -513,7 +513,7 @@ public class MyFTP {
 						}
 					} catch (Exception e) {
 						System.out.println(e);
-			        	return result;
+			        	return false;
 					}
 				}
 			}
@@ -545,7 +545,6 @@ public class MyFTP {
 			    	result = true;
 				} catch (Exception e) {
 					System.out.println("error descarga :" + e);
-					//Toast.makeText(context, "Descargar error: " + error, Toast.LENGTH_LONG).show(); 
 					return false;
 				}
             return result;
