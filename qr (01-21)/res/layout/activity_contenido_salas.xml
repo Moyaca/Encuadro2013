@@ -28,7 +28,7 @@
          android:id="@+id/textAreaScroller"
          android:layout_width="fill_parent"
          android:layout_height="495px"
-         android:layout_above="@+id/btnListaObras"
+         android:layout_above="@+id/btnObrasSala"
          android:layout_alignRight="@+id/btnListaObras"
          android:layout_below="@+id/imageView1"
          android:scrollbars="vertical" >
@@ -40,22 +40,23 @@
              android:text="Descripción:" />
      </ScrollView>
 
-
     <Button
         android:id="@+id/btnObrasSala"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView2"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
+        android:layout_alignRight="@+id/textAreaScroller"
+        android:layout_marginBottom="17dp"
         android:text="Obras de la sala" />
 
     <Button
         android:id="@+id/btnREC"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/textAreaScroller"
+        android:layout_alignBaseline="@+id/btnObrasSala"
+        android:layout_alignBottom="@+id/btnObrasSala"
+        android:layout_alignLeft="@+id/textAreaScroller"
+        android:layout_marginLeft="14dp"
         android:text="REC IMG" />
 
 </RelativeLayout>

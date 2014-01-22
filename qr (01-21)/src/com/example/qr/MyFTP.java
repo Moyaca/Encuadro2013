@@ -680,5 +680,17 @@ public class MyFTP {
 			 }
 			 
 		 }
+		 public String getContenidoDirectorio(){
+			 String result ="nada";
+			 File f = new File(context.getCacheDir().getPath());
+			 File file[] = f.listFiles();
+			 System.out.print("Path: " + context.getCacheDir().getPath());
+			 for (int i=0; i < file.length; i++)
+			 {
+			     System.out.print(" FileName:" + file[i].getName());
+			     result = result + "\n FileName:" + file[i].getName();
+			 }
+			 return result;
+		 }
 		
 }
