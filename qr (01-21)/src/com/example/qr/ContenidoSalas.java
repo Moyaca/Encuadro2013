@@ -57,7 +57,7 @@ public class ContenidoSalas extends Activity {
 		String[] separated = extras.getString("result").split("=>");
 		
 		nom = "test.jpg";
-		dir = Environment.getExternalStorageDirectory() + "/test.jpg";;
+		dir = Environment.getExternalStorageDirectory() + "/test.jpg";
 		
 		idsala = separated[0];
 		FtpExecute ftp = new FtpExecute();
