@@ -40,16 +40,6 @@
 
     </RadioGroup>
 
-    <ImageView
-        android1:id="@+id/imgview"
-        android1:layout_width="wrap_content"
-        android1:layout_height="wrap_content"
-        android1:layout_alignLeft="@+id/button1"
-        android1:layout_below="@+id/button1"
-        android1:layout_marginLeft="21dp"
-        android1:layout_marginTop="24dp"
-        android1:src="@drawable/ic_launcher" />
-
     <Button
         android1:id="@+id/button1"
         android1:layout_width="wrap_content"
@@ -58,5 +48,15 @@
         android1:layout_centerHorizontal="true"
         android1:layout_marginTop="26dp"
         android1:text="Capturar" />
+
+    <ImageView
+        android1:id="@+id/imgview"
+        android1:layout_width="wrap_content"
+        android1:layout_height="wrap_content"
+        android1:layout_alignParentBottom="true"
+        android1:layout_alignParentLeft="true"
+        android1:layout_alignParentRight="true"
+        android1:layout_below="@+id/button1"
+        android1:src="@drawable/ic_launcher" />
 
 </RelativeLayout>
