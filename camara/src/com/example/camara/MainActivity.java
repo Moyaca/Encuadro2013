@@ -2,17 +2,16 @@ package com.example.camara;
 
 import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.net.URI;
 
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.media.MediaScannerConnection;
 import android.media.MediaScannerConnection.MediaScannerConnectionClient;
 import android.net.Uri;
@@ -38,7 +37,6 @@ public class MainActivity extends Activity {
 	private static int TAKE_PICTURE = 1;
 	private static int SELECT_PICTURE = 2;
 	private String name = "";
-	private String name2 = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,8 +44,7 @@ public class MainActivity extends Activity {
         
 //        name = Environment.getExternalStorageDirectory() + "/test1.jpg";
        
-        name = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/test1.jpg";
-        name2 = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/test2.jpg";
+        name = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/test2.jpg";
         Button btnAction = (Button)findViewById(R.id.button1);
         
         btnAction.setOnClickListener(new OnClickListener() { 
@@ -89,58 +86,60 @@ public class MainActivity extends Activity {
     }
     
     @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-	
-    	if (requestCode == TAKE_PICTURE) {
-    		if (data != null) {
-    			if (data.hasExtra("data")) {
-    				try {
-//	    				Bitmap bm = ShrinkBitmap(name, 150, 150);
-    					Bitmap bm = (Bitmap) data.getParcelableExtra("data");
-	    				ImageView iv = (ImageView)findViewById(R.id.imgview);
-	    				iv.setImageBitmap(bm);
-	    				
-	    	    	    FileOutputStream fos;
-						
-							fos = new FileOutputStream(name2);
-						
-	    	    	    bm.compress(Bitmap.CompressFormat.JPEG, 15, fos);
-	    	            fos.close();
-    	            
-    	            } catch (Exception e) {
-						System.out.print(e.toString());
-						Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
-					}
-	              }                       
-    		} 
+    	if(resultCode == RESULT_OK){
     		
-    	else {
-    		ImageView iv = (ImageView)findViewById(R.id.imgview);
-	        iv.setImageBitmap(BitmapFactory.decodeFile(name));
-	        new MediaScannerConnectionClient() {
-	        	private MediaScannerConnection msc = null; {
-	        		msc = new MediaScannerConnection(getApplicationContext(), this); msc.connect();
-	        		}
-	        	public void onMediaScannerConnected() {
-	        		msc.scanFile(name, null);
-	        		}
-	                                public void onScanCompleted(String path, Uri uri) {
-	                                        msc.disconnect();
-	                                }
-	                        };                                
-	                }
-    		} 
-    	
-    	else if (requestCode == SELECT_PICTURE){
-    		Uri selectedImage = data.getData();
-    		InputStream is;
-    		try {
-    			is = getContentResolver().openInputStream(selectedImage);
-	            BufferedInputStream bis = new BufferedInputStream(is);
-	            Bitmap bitmap = BitmapFactory.decodeStream(bis);
-	            ImageView iv = (ImageView)findViewById(R.id.imgview);
-	            iv.setImageBitmap(bitmap);                                                
-	            } catch (FileNotFoundException e) {}
-	        }
+	    	if (requestCode == TAKE_PICTURE) {
+	    		
+	    		if (data != null) {
+	    			if (data.hasExtra("data")) {
+	    				try {
+	    					
+	    					Bitmap bm = (Bitmap) data.getParcelableExtra("data");
+	    					Bitmap reBm = getResizedBitmap(bm,150,150);
+		    				ImageView iv = (ImageView)findViewById(R.id.imgview);
+		    				iv.setImageBitmap(reBm);
+		    				
+		    	    	    	FileOutputStream fos;
+								fos = new FileOutputStream(name);
+								reBm.compress(Bitmap.CompressFormat.JPEG, 15, fos);
+								fos.close();
+	    	            
+	    	            } catch (Exception e) {
+							System.out.print(e.toString());
+							Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+						}
+		              }                       
+	    		} 
+	    		
+	    	else {
+	    		ImageView iv = (ImageView)findViewById(R.id.imgview);
+		        iv.setImageBitmap(BitmapFactory.decodeFile(name));
+		        new MediaScannerConnectionClient() {
+		        	private MediaScannerConnection msc = null; {
+		        		msc = new MediaScannerConnection(getApplicationContext(), this); msc.connect();
+		        		}
+		        	public void onMediaScannerConnected() {
+		        		msc.scanFile(name, null);
+		        		}
+		                                public void onScanCompleted(String path, Uri uri) {
+		                                        msc.disconnect();
+		                                }
+		                        };                                
+		                }
+	    		} 
+	    	
+	    	else if (requestCode == SELECT_PICTURE){
+	    		Uri selectedImage = data.getData();
+	    		InputStream is;
+	    		try {
+	    			is = getContentResolver().openInputStream(selectedImage);
+		            BufferedInputStream bis = new BufferedInputStream(is);
+		            Bitmap bitmap = BitmapFactory.decodeStream(bis);
+		            ImageView iv = (ImageView)findViewById(R.id.imgview);
+		            iv.setImageBitmap(bitmap);                                                
+		            } catch (FileNotFoundException e) {}
+		        }
+    	}
 	}
 
 
@@ -151,28 +150,30 @@ public class MainActivity extends Activity {
         return true;
     }
     
-    Bitmap ShrinkBitmap(String file, int width, int height){
-    	
-	    	BitmapFactory.Options bmpFactoryOptions = new BitmapFactory.Options();
-	 	    bmpFactoryOptions.inJustDecodeBounds = true;
-	 	    Bitmap bitmap = BitmapFactory.decodeFile(file, bmpFactoryOptions);
- 	    
-    	    int heightRatio = (int)Math.ceil(bmpFactoryOptions.outHeight/(float)height);
-    	    int widthRatio = (int)Math.ceil(bmpFactoryOptions.outWidth/(float)width);
-
-    	    if (heightRatio > 1 || widthRatio > 1){
-    	    	if (heightRatio > widthRatio)    	     {
-    	    		bmpFactoryOptions.inSampleSize = heightRatio;
-	    	     } else {
-	    	    	 bmpFactoryOptions.inSampleSize = widthRatio; 
-	    	     }
-    	    }
-    	    
-    	    bmpFactoryOptions.inJustDecodeBounds = false;
-    	    bitmap = BitmapFactory.decodeFile(file, bmpFactoryOptions);
-
-    	    
-    	 return bitmap;
+    public Bitmap getResizedBitmap(Bitmap bm, int newHeight, int newWidth) {
+    	 
+    	int width = bm.getWidth();
+    	 
+    	int height = bm.getHeight();
+    	 
+    	float scaleWidth = ((float) newWidth) / width;
+    	 
+    	float scaleHeight = ((float) newHeight) / height;
+    	 
+    	// CREATE A MATRIX FOR THE MANIPULATION
+    	 
+    	Matrix matrix = new Matrix();
+    	 
+    	// RESIZE THE BIT MAP
+    	 
+    	matrix.postScale(scaleWidth, scaleHeight);
+    	 
+    	// RECREATE THE NEW BITMAP
+    	 
+    	Bitmap resizedBitmap = Bitmap.createBitmap(bm, 0, 0, width, height, matrix, false);
+    	 
+    	return resizedBitmap;
+    	 
     	}
     
     

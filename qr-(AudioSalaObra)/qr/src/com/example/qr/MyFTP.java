@@ -24,6 +24,7 @@ public class MyFTP {
 	String zUser = "zonas", zPassword = "12345678";
 
 	Context context;
+	
 	MyFTP(Context c){
 	context = c;
 	}

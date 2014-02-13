@@ -2,6 +2,7 @@ package com.example.qr;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 
 import org.apache.commons.net.ftp.FTPClient;
 
@@ -20,6 +21,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Matrix;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -28,24 +30,24 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class ContenidoSalas extends Activity {
+	
+	private static int TAKE_PICTURE = 1;
+	private String nombre = "",idsala = "", dirFoto = "", nomFoto = "" ;
+	int posicion = 0;
+	
 	TextView tv1, tv2;
 	ImageView img;
 	Button btnSalaObra, btnRec, btnPlay;
 	ProgressDialog pDialog;
-	int ftplogin=0;
 	MediaPlayer mp;
-	int posicion = 0;
-	String ftplog=String.valueOf(ftplogin), error="ninguno!", idsala = "";
-	public FTPClient mFTPClient = null;
-	private String nom = "", dir = "";
-	String nombre="", idSala="";
-	private static int TAKE_PICTURE = 1;
-	Consumirws ws = new Consumirws();
+
+	Consumirws ws;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_contenido_salas);
+		//Limpiar algun rastro que quede del audio;
 		destruir();
 		
 		tv1 = (TextView) findViewById(R.id.textView1);
@@ -54,42 +56,42 @@ public class ContenidoSalas extends Activity {
 		btnSalaObra = (Button) findViewById(R.id.btnObrasSala);
 		btnRec = (Button) findViewById(R.id.btnREC);
 		btnPlay = (Button) findViewById(R.id.btnAudio);
-		Bundle extras = getIntent().getExtras();
 		
+		Bundle extras = getIntent().getExtras();		
 		String[] separated = extras.getString("result").split("=>");
 		
-		dir = Environment.getExternalStorageDirectory() + "/test.jpg";;
+		//Directorio donde guardaremos la foto
+		dirFoto = Environment.getExternalStorageDirectory() + "/foto.jpg";
+		nomFoto = "foto.jpg";
 		
 		idsala = separated[0];
-		FtpExecute ftp = new FtpExecute();
-  	    String[] sala = {idsala,separated[(separated.length-1)]};	
-	    
-  	    idSala = separated[0];
-  	    nombre = separated[1];
+		nombre = separated[1];
+  	    
 		tv1.setText("Nombre: " + separated[1]);
 		tv2.setText("Descripción: " + separated[2]);
+		
 		btnPlay.setText("Play");
-		ftp.execute(sala);
+		
+		FtpExecute ftp = new FtpExecute();
+  	    String[] sala = {idsala,separated[(separated.length-1)]};	
+  	    ftp.execute(sala);
+		
+		//Para listar las obras de esta sala
 		btnSalaObra.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				System.out.print( "hola:" );
 				Intent intent = new Intent(ContenidoSalas.this,ListaObras.class);
 				intent.putExtra("idSala", idsala);
 				startActivity(intent);
 			}
 		});
-		
+		//Captura de foto y comienzo de reconocimiento de imagen
 		btnRec.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
                 Intent intent =  new Intent(MediaStore.ACTION_IMAGE_CAPTURE);    	
                 int code = TAKE_PICTURE;
-                
-                Uri output = Uri.fromFile(new File(dir));
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, output);
-                
                 startActivityForResult(intent, code);
 			}
 		});
@@ -99,16 +101,13 @@ public class ContenidoSalas extends Activity {
 			public void onClick(View v) {
 				if(btnPlay.getText().toString()=="Play"){
 					FtpAudio ftpaudio = new FtpAudio();
-					ftpaudio.execute(idSala,nombre);				
+					ftpaudio.execute(idsala,nombre);				
 					btnPlay.setText("Stop");
 				}else{
 					btnPlay.setText("Play");
 					detener(v);
 				}
 			}
-				
-                
-			
 		});
 	}
 
@@ -120,26 +119,33 @@ public class ContenidoSalas extends Activity {
 	}
 
 	 @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		 if (requestCode == TAKE_PICTURE) {
-     		Toast.makeText(this, "TAKE_PICTURE", Toast.LENGTH_SHORT).show();
-	        
-     		//llamo al hilo para subir la imagen
-     		ReconocimientoImg ftpImg = new ReconocimientoImg();
-	    	String[] obra = {nom,dir,idsala};
-	    	ftpImg.execute(obra);
-	    	
-	        new MediaScannerConnectionClient() {
-	        	private MediaScannerConnection msc = null; {
-	        		msc = new MediaScannerConnection(getApplicationContext(), this); msc.connect();
-	        	}
-	        	public void onMediaScannerConnected() {
-	        		msc.scanFile(dir, null);
-	        	}
-                public void onScanCompleted(String path, Uri uri) {
-                	msc.disconnect();
-                }
-            };   
-		}
+		 if(resultCode==RESULT_OK){
+			 if (requestCode == TAKE_PICTURE) {
+		     		Toast.makeText(this, "TAKE_PICTURE", Toast.LENGTH_SHORT).show();
+
+		     		//Tomo la la imagen en bitmap
+		     		Bitmap bm = (Bitmap) data.getParcelableExtra("data");
+		     		//Modifico su tamaño
+					Bitmap reBm = getResizedBitmap(bm,150,150);
+					
+					try {
+							
+						FileOutputStream fos;
+						fos = new FileOutputStream(dirFoto);
+						reBm.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+						
+			     		//llamo al hilo para subir la imagen
+			     		ReconocimientoImg ftpImg = new ReconocimientoImg();
+				    	String[] obra = {nomFoto,dirFoto,idsala};
+				    	ftpImg.execute(obra);
+				    	fos.close();
+					} catch (Exception e) {
+						System.out.print(e.toString());
+						Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+					}   
+				}
+		 }
+		
 	 }
 	 
 	class FtpExecute extends AsyncTask<String,String,Bitmap>{
@@ -211,7 +217,8 @@ public class ContenidoSalas extends Activity {
         @Override
         protected void onPostExecute(String v) {
         	pDialog.dismiss();
-        	System.out.print(" resultado :"+v);
+//        	System.out.print(" resultado :"+v);
+//        	Toast.makeText(getApplicationContext(), v, Toast.LENGTH_LONG).show();
         	Intent intent = new Intent(ContenidoSalas.this,ContenidoObras.class);
         	intent.putExtra("result", v);
         	startActivity(intent);
@@ -317,4 +324,24 @@ public class ContenidoSalas extends Activity {
             posicion = 0;
         }
     }
+    public Bitmap getResizedBitmap(Bitmap bm, int newHeight, int newWidth) {
+   	 
+    	int width = bm.getWidth();    	 
+    	int height = bm.getHeight();
+    	 
+    	float scaleWidth = ((float) newWidth) / width;    	 
+    	float scaleHeight = ((float) newHeight) / height;
+    	 
+    	// Crear matrix para manejar  	 
+    	Matrix matrix = new Matrix();
+    	 
+    	// Modificando tamaño   	 
+    	matrix.postScale(scaleWidth, scaleHeight);
+    	 
+    	// recrea el nuevo bitmap 
+    	Bitmap resizedBitmap = Bitmap.createBitmap(bm, 0, 0, width, height, matrix, false);
+    	 
+    	return resizedBitmap;
+    	 
+    	}
 }
