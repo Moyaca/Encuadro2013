@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="titulo">Titulo de mi view</string>
+    <string name="icono">aqui va el icono</string>
+    <string name="boton1">Boton 1</string>
+    <string name="boton2">Boton 2</string>
+    <string name="boton3">Boton 3</string>
+    <string name="boton4">Boton 4</string>
+    <string name="pie1">Esto es el primer pie</string>
+    <string name="pie2">este el el segundo pie</string>
+    <string name="ultima_pista">Ultima Pista:</string>
+    <string name="cant_obras">Obras: 0/0</string>
+    <string name="tiempo">Tiempo: 00:00:00</string>
+    <string name="app_name">asd</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="btn_fin_juego">Finalizar Juego</string>
+    <string name="btn_puntaje">Ver Puntajes</string>
+    <string name="title_activity_progreso">Progreso</string>
+    <string name="title_activity_puntajes">Puntajes</string>
+
+</resources>
