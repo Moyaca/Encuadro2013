@@ -1,10 +1,14 @@
 package com.example.qr;
 
+import org.apache.http.impl.client.TunnelRefusedException;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
@@ -13,11 +17,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
+import android.widget.Toast;
 
 public class Estadistica extends Activity {
 	
 	
-	private Button b1;
+	private Button b1,b2;
 	ProgressDialog pDialog;
 	private RadioGroup rdgVisita;
 	private RadioGroup rdgNacio;
@@ -28,12 +33,21 @@ public class Estadistica extends Activity {
 	private String checkSexo="";
 	private String checkEdad="";
 
+	private boolean omitir=false;
+	private boolean back2=false;
+	SharedPreferences prefs=null;
+	SharedPreferences.Editor editor=null;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_estadistica);
 		
+		prefs = getSharedPreferences("user",Context.MODE_PRIVATE);
+		editor = prefs.edit();
+		
 		b1 = (Button) findViewById(R.id.button1);
+		b2 = (Button) findViewById(R.id.button2);
 		rdgVisita = (RadioGroup)findViewById(R.id.rdgVisita);
 		rdgNacio = (RadioGroup)findViewById(R.id.rdgNacio);
 		rdgSexo = (RadioGroup)findViewById(R.id.rdgSexo);
@@ -49,6 +63,7 @@ public class Estadistica extends Activity {
 	 		        }else if (checkedId == R.id.radio1){
 	 		           checkVisita = "Invividual"; 
 	 		         }
+	 		      
 	 		    }
 	 		     
 	 		});
@@ -100,32 +115,29 @@ public class Estadistica extends Activity {
 	 		});
 		  
 		  b1.setOnClickListener(new View.OnClickListener() {
-				
-				
 				@Override
 				public void onClick(View v) {
 					// TODO Auto-generated method stub 
-					EnviarDatosEstadistica envDatos = new EnviarDatosEstadistica();
-					System.out.println(checkNacio + " : " + checkSexo  +" : "+checkVisita +" : " +checkEdad +" : ");
-					envDatos.execute(checkNacio,checkSexo,checkVisita,checkEdad);
-					
-					 AlertDialog.Builder builder = new AlertDialog.Builder(Estadistica.this);
-		             //builder.setTitle("Pista");
-		             builder.setMessage("Datos Enviados Correctamente");
-		             builder.setPositiveButton("OK", new DialogInterface.OnClickListener()
-		             {
-		                    public void onClick(DialogInterface dialog, int which) {
-		                    //Toast.makeText(getApplicationContext(), "You clicked on YES", Toast.LENGTH_SHORT).show();
-		                    	Intent intent = new Intent(Estadistica.this,MainActivity.class);
-		    					startActivity(intent);
-		    					Estadistica.this.finish();
-		                    }
-		               });
-		             builder.create();
-		             builder.show();
+					if(checkNacio=="" || checkSexo=="" || checkVisita=="" || checkEdad==""){
+						Toast.makeText(getApplicationContext(), "No pueden haber Campos Vacios", Toast.LENGTH_SHORT).show();
+					}else{
+						EnviarDatosEstadistica envDatos = new EnviarDatosEstadistica();
+						System.out.println(checkNacio + " : " + checkSexo  +" : "+checkVisita +" : " +checkEdad );
+						omitir = false;
+						envDatos.execute(checkNacio,checkSexo,checkVisita,checkEdad);
+						}
+				    
 				}
 			});
 		 
+		  b2.setOnClickListener(new View.OnClickListener() {				
+				@Override
+				public void onClick(View v) {
+					omitir = true;
+					EnviarDatosEstadistica envDatos = new EnviarDatosEstadistica();
+					envDatos.execute(null,null,null,null);
+				}
+			});
 	}
 
 	@Override
@@ -137,7 +149,36 @@ public class Estadistica extends Activity {
 
 	}
 	
+	//Listener para preguntar si sale con el botón back
+	@Override
+	public void onBackPressed() {
+	   System.out.println("OnBack " + back2);
+	   if(back2){
+		   Estadistica.this.finish();
+	   }else{
+		   back2=true;
+		   AlertDialog.Builder cartelsalida = new AlertDialog.Builder(Estadistica.this);
+		   cartelsalida.setTitle("Salir");
+		   cartelsalida.setMessage("¿Desea salir?");
+		   cartelsalida.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+		    	public void onClick(DialogInterface dialog, int which) {
+		    		Estadistica.this.finish();
+		    	}
+		    });
+		   cartelsalida.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+		    	public void onClick(DialogInterface dialog, int which) {
+		    		back2=false;
+		    	}
+		    });
+		   cartelsalida.create();
+		   cartelsalida.show();
+		   
+	   }
+	   
+	}
+	
 	class EnviarDatosEstadistica extends AsyncTask<String,String,String>{
+		 
         @Override
         protected void onPreExecute() {
         	pDialog = new ProgressDialog(Estadistica.this);
@@ -150,20 +191,40 @@ public class Estadistica extends Activity {
         @Override
         protected String doInBackground(String... params) {
         	String result ="";
+        	String nacionalidad=params[0], sexo=params[1], tipo_v=params[2], edad=params[3];
         	try {
         		Consumirws ws = new Consumirws();
-        		result =ws.Altavisita(params[0],params[1],params[2],params[3] );
-		 
+        		if(!omitir)
+        			result =ws.Altavisita(nacionalidad, sexo, tipo_v, edad);
+        		else
+        			result =ws.Altavisita("","","","");
 			} catch (Exception e) {
-				System.out.println("error: " + e);
+				result = e.toString();
 			}
         	return result;
         }
  
         @Override
         protected void onPostExecute(String v) {
-        	System.out.println(" resultado " + v);        	
-        	 pDialog.dismiss();
+        	Toast.makeText(getApplicationContext(), v, Toast.LENGTH_LONG).show();
+        	int id = Integer.parseInt(v);
+        	if(id>0){
+        		editor.putInt("idvisitante", id);
+        		editor.commit();
+        		if(!omitir)Toast.makeText(getApplicationContext(), "Datos enviados Correctamente", Toast.LENGTH_SHORT).show();
+        	}else{
+        		if(!omitir)Toast.makeText(getApplicationContext(), "Result: " + v, Toast.LENGTH_LONG).show();
+        	}
+//        	
+			Intent intent = new Intent(Estadistica.this,MainActivity.class); 					
+			startActivity(intent);
+			Estadistica.this.finish();
+			pDialog.dismiss();
+//        	
+        	
+           
+
         }
-    }	
+    }
+	
 }

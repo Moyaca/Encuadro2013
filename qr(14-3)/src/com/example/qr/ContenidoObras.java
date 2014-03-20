@@ -2,7 +2,13 @@ package com.example.qr;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.apache.commons.net.ftp.FTPClient;
+
+import com.example.qr.Progreso.FinJuego;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -15,9 +21,11 @@ import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,6 +41,8 @@ public class ContenidoObras extends Activity {
 	String nombre="", idObra="", videocache="";
 	Consumirws ws = new Consumirws();
 	
+	SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
+	 
 	SharedPreferences prefs=null;
 	SharedPreferences.Editor editor=null;
 	
@@ -43,7 +53,6 @@ public class ContenidoObras extends Activity {
 		
 		prefs = getSharedPreferences("user",Context.MODE_PRIVATE);
 		editor = prefs.edit();
-		
 		destruir();
 		
 		tv1 = (TextView) findViewById(R.id.textView1);
@@ -59,7 +68,6 @@ public class ContenidoObras extends Activity {
  		idProximaObra= prefs.getInt("obrasig",0); 
 		
 		Bundle extras = getIntent().getExtras();
-		System.out.print(extras);
 		String[] separated = extras.getString("result").split("=>");
 		String[] separatedImg = separated[4].split("/");
 		
@@ -77,6 +85,7 @@ public class ContenidoObras extends Activity {
 		//EJECUTA EL OBRAPERTENECEAJUEGO CON EL idObra
     	if(idjuego>0 && jugando==1 ){
     		System.out.println("Está jugando");
+    		Toast.makeText(this, "jugando", Toast.LENGTH_SHORT).show();
     		final Integer idobra = Integer.parseInt(idObra);					//Obtengo la obra recientemente escaneada
     		Integer obrasig=prefs.getInt("obrasig",0);			//Obtengo la obra siguiente obtenida en la escaneada anterior
     		System.out.println("Idobra: "+idobra+" - obrasig: "+obrasig);
@@ -92,27 +101,34 @@ public class ContenidoObras extends Activity {
 			    	public void onClick(DialogInterface dialog, int which) {
 			    		Integer progreso = prefs.getInt("progreso",0);
 			    		Integer cantobra = prefs.getInt("cantidadobras",0); 
+			    		
+			    		editor.putInt("progreso",progreso+1);
+		    			editor.commit();
+		    			
 			    		System.out.println("Progreso: "+progreso+" - Cantidad "+cantobra);
 			    		if((progreso+1)==cantobra){
-			    			AlertDialog.Builder builderfinalizado = new AlertDialog.Builder(ContenidoObras.this);
-			    			builderfinalizado.setTitle("¡Excelente!");
-			    			builderfinalizado.setMessage("¡Felicitaciones! ¡Última obra encontrada!");
-			    			builderfinalizado.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
-			    				public void onClick(DialogInterface dialog, int which) {
-			    					//Acá se finaliza el juego y se setean los puntos.
-			    					editor.putInt("estajugando",0);                        	// id del juego 
-			    					editor.commit();
-			    				}
-			    			});
-			    			builderfinalizado.create();
-			    			builderfinalizado.show();
+//			    			AlertDialog.Builder builderfinalizado = new AlertDialog.Builder(ContenidoObras.this);
+//			    			builderfinalizado.setTitle("¡Excelente!");
+//			    			builderfinalizado.setMessage("¡Felicitaciones! ¡Última obra encontrada!");
+//			    			builderfinalizado.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+//			    				public void onClick(DialogInterface dialog, int which) {
+//			    					//Acá se finaliza el juego y se setean los puntos.
+//			    					editor.putInt("estajugando",0); // id del juego 
+//			    					editor.commit();
+			    			
+			    					Mensaje_Fin();
+			    					
+			    					
+//			    				}
+//			    			});
+//			    			builderfinalizado.create();
+//			    			builderfinalizado.show();
 			    		}
 			    		else {
 			    			
 			    			// idj es el ide del juego tomado de la secion, ya que obraexistente( id del juego en memoria) se reinicia luego de tomar cada foto
 			    			//por esodaba error obraexistente tenia valor = ""
-			    			editor.putInt("progreso",progreso+1);
-			    			editor.commit();
+			    			
 			    			BuscarPista bp = new BuscarPista();
 		                	System.out.println("Buscarpista: "+idobra.toString()+" - "+idjuego);
 		                  	bp.execute(idobra.toString(), idjuego.toString());
@@ -124,6 +140,7 @@ public class ContenidoObras extends Activity {
     		}
     		else {
     			System.out.println("No entro");
+    			Toast.makeText(this, "no juega " + idjuego, Toast.LENGTH_LONG).show();
     		}
     	}
     	else if(idjuego==0){
@@ -394,11 +411,11 @@ public class ContenidoObras extends Activity {
 	class BuscarPista extends AsyncTask<String,String,String>{
         @Override
         protected void onPreExecute() {
-//        	pDialog = new ProgressDialog(ContenidoObras.this);
-//			pDialog.setMessage("Espere por favor...");
-//			pDialog.setIndeterminate(false);
-//			pDialog.setCancelable(false);
-//			pDialog.show();
+        	pDialog = new ProgressDialog(ContenidoObras.this);
+			pDialog.setMessage("Espere por favor...");
+			pDialog.setIndeterminate(false);
+			pDialog.setCancelable(false);
+			pDialog.show();
         }
  
         @Override
@@ -409,6 +426,10 @@ public class ContenidoObras extends Activity {
         		Consumirws ws = new Consumirws();
         		System.out.println("Params0: "+ params[0]+ " - Params1: " + params[1]);
         		result =ws.BuscarPista(Integer.parseInt(params[0]),Integer.parseInt(params[1]));
+        		//le pido al servidor la hora y la guardo en sesion
+        		String tiempo = ws.getHora();
+        		editor.putString("tiempoinicio",tiempo);
+        		editor.commit();
 			} catch (Exception e) {
 				System.out.println("errorbuscarpista: " + "result: "+ result);
 			}
@@ -433,14 +454,7 @@ public class ContenidoObras extends Activity {
     }
     
 	class CantidadObrasJuego extends AsyncTask<String,String,String>{
-        @Override
-        protected void onPreExecute() {
-//        	pDialog = new ProgressDialog(MainActivity.this);
-//			pDialog.setMessage("Espere por favor...");
-//			pDialog.setIndeterminate(false);
-//			pDialog.setCancelable(false);
-//			pDialog.show();
-        }
+       
  
         @Override
         protected String doInBackground(String... params) {
@@ -458,7 +472,6 @@ public class ContenidoObras extends Activity {
         @Override
         protected void onPostExecute(String result) {
         	System.out.println("Cantidad obras: " + result);
-//        	pDialog.dismiss();
         	editor.putInt("cantidadobras", Integer.parseInt(result));
         	editor.putInt("progreso", 1);
         	editor.commit();
@@ -513,5 +526,104 @@ public class ContenidoObras extends Activity {
 		    builder.show(); 
 		}
     }
+public void Mensaje_Fin(){
+		
+		LayoutInflater factory = LayoutInflater.from(this);            
+        final View textEntryView = factory.inflate(R.layout.nick_name_fild, null);
+
+        AlertDialog.Builder alert = new AlertDialog.Builder(this); 
+
+        alert.setTitle("Juego Finalizado!"); 
+        alert.setMessage("Felizitaciones: Ingrese su Nick Name");  
+        alert.setView(textEntryView); 
+
+        final EditText input = (EditText) textEntryView.findViewById(R.id.editText1);
+
+        alert.setPositiveButton("Sumit", new DialogInterface.OnClickListener() { 
+        public void onClick(DialogInterface dialog, int whichButton) { 
+        	
+    		String nick_name =input.getText().toString();
+    		
+    		if(nick_name!=null){
+    			if(nick_name=="" || nick_name.length()==0){
+    				Toast.makeText(getApplicationContext(), "Debe ingresar un nombre", Toast.LENGTH_LONG).show();
+    				Mensaje_Fin();
+    			}else{
+    				
+		    		FinJuego fj = new FinJuego();
+		    		fj.execute(nick_name);
+    			}
+    		}else{
+    			Toast.makeText(getApplicationContext(), "Vasio null", Toast.LENGTH_LONG).show();
+    		}
+        } 
+        }); 
+
+        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() { 
+          public void onClick(DialogInterface dialog, int whichButton) { 
+            // Canceled. 
+          } 
+        }); 
+        alert.show(); 	
+	}
+	
+	class FinJuego extends AsyncTask<String, String, String>{
+
+		@Override
+		protected void onPreExecute() {
+		pDialog = new ProgressDialog(ContenidoObras.this);
+		pDialog.setMessage("Espere por favor...");
+		pDialog.setIndeterminate(false);
+		pDialog.setCancelable(false);
+		pDialog.show();
+		}
+		@Override
+		protected String doInBackground(String... params) {
+			String res = "", hora_fin="";
+			String hora_inicio = prefs.getString("tiempoinicio", "00:00:00");
+			int progreso = prefs.getInt("progreso", 0);
+			int id_visitante = prefs.getInt("idvisitante", 0);
+			int id_juego = prefs.getInt("idvisitante",0);
+//			String hora_inicio = "00:00:00";
+//			int progreso = 4;
+//			int id_visitante = 1;
+//			int id_juego = 		1;	
+			String nick_name = params[0];
+			try {
+				Consumirws ws = new Consumirws();
+				hora_fin = ws.getHora();
+				
+				Date fin = simpleDateFormat.parse(hora_fin);
+	            Date inicio = simpleDateFormat.parse(hora_inicio);
+	            
+	            long difference = fin.getTime() - inicio.getTime();
+	            
+	            int s = (int) difference / (1000);
+	            int puntaje = ((progreso*6000)/(s/2));
+	            
+	            res= ws.FinJuego(id_visitante, id_juego, puntaje, nick_name);
+	            
+			} catch (Exception e) {
+				res = e.toString();
+			}
+			return res;
+		}
+		
+		@Override
+		protected void onPostExecute(String result) {
+			Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+//			editor.putInt("progreso", 0);
+//			editor.putInt("cantidadobras", 0);
+			editor.putInt("estajugando", 0);
+//			editor.remove("pista");
+//			editor.remove("tiempoinicio");
+			editor.commit();
+			
+			pDialog.dismiss();
+			
+			Intent intent = new Intent(ContenidoObras.this,Puntajes.class);
+			startActivity(intent);
+		}
+	}
     
 }

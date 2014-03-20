@@ -8,145 +8,182 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".Estadistica" >
 
-     <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="31dp"
-        android:text="Visita:" />
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView1"
-        android:layout_below="@+id/rdgVisita"
-        android:layout_marginTop="18dp"
-        android:text="Nacionalidad:" />
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_weight="1"
+            android:layout_height="wrap_content" >
 
-    <RadioGroup
-        android:id="@+id/rdgVisita"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/button1"
-        android:layout_alignTop="@+id/textView1" >
+            <TextView
+                android:id="@+id/textView1"
+                 android:layout_width="fill_parent"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Visita:" />
 
-        <RadioButton
-            android:id="@+id/radio0"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:checked="true"
-            android:text="Grupal" />
+            <RadioGroup
+                android:id="@+id/rdgVisita"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" >
 
-        <RadioButton
-            android:id="@+id/radio1"
-            android:layout_width="134dp"
-            android:layout_height="wrap_content"
-            android:text="Individual" />
-    </RadioGroup>
+                <RadioButton
+                    android:id="@+id/radio0"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Grupal" />
 
-    <RadioGroup
-        android:id="@+id/rdgNacio"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/rdgVisita"
-        android:layout_alignTop="@+id/textView2" >
+                <RadioButton
+                    android:id="@+id/radio1"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Individual" />
+            </RadioGroup>
+        </LinearLayout>
 
-        <RadioButton
-            android:id="@+id/radio0"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:checked="true"
-            android:text="Uruguaya" />
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_weight="1"
+            android:layout_height="wrap_content" >
 
-        <RadioButton
-            android:id="@+id/radio1"
-            android:layout_width="138dp"
-            android:layout_height="wrap_content"
-            android:text="Extranjera" />
-    </RadioGroup>
+            <TextView
+                android:id="@+id/textView2"
+                 android:layout_width="fill_parent"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Nacionalidad:" />
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView2"
-        android:layout_below="@+id/rdgNacio"
-        android:text="Sexo:" />
+            <RadioGroup
+                android:id="@+id/rdgNacio"
+                android:layout_width="fill_parent"
+                android:layout_weight="1"
+                android:layout_height="wrap_content" >
 
-    <RadioGroup
-        android:id="@+id/rdgSexo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/rdgNacio"
-        android:layout_alignTop="@+id/textView3" >
+                <RadioButton
+                    android:id="@+id/radio0"
+                    android:layout_width="fill_parent"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Uruguaya" />
 
-        <RadioButton
-            android:id="@+id/radio0"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:checked="true"
-            android:text="Masculino" />
+                <RadioButton
+                    android:id="@+id/radio1"
+                    android:layout_width="fill_parent"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Extranjera" />
+            </RadioGroup>
+        </LinearLayout>
 
-        <RadioButton
-            android:id="@+id/radio1"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:text="Femenino" />
-    </RadioGroup>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_weight="1"
+            android:layout_height="wrap_content" >
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView3"
-        android:layout_below="@+id/rdgSexo"
-        android:layout_marginTop="18dp"
-        android:text="Edad:" />
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="fill_parent"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Sexo:" />
 
-    <RadioGroup
-        android:id="@+id/rdgEd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/button1"
-        android:layout_alignRight="@+id/rdgVisita"
-        android:layout_alignTop="@+id/textView4" >
+            <RadioGroup
+                android:id="@+id/rdgSexo"
+                android:layout_width="fill_parent"
+                android:layout_weight="1"
+                android:layout_height="wrap_content" >
 
-        <RadioButton
-            android:id="@+id/radio0"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:checked="true"
-            android:text="0 a 12" />
+                <RadioButton
+                    android:id="@+id/radio0"
+                    android:layout_width="fill_parent"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Masculino" />
 
-        <RadioButton
-            android:id="@+id/radio1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="13 a 15" />
+                <RadioButton
+                    android:id="@+id/radio1"
+                    android:layout_width="fill_parent"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Femenino" />
+            </RadioGroup>
+        </LinearLayout>
 
-        <RadioButton
-            android:id="@+id/radio2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="16 a 18" />
-        
-         <RadioButton
-             android:id="@+id/radio3"
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content"
-             android:text="+ de 18" />
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_weight="1"
+            android:layout_height="wrap_content" >
 
-    </RadioGroup>
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="fill_parent"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Edad:" />
 
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:text="Enviar" />
+            <RadioGroup
+                android:id="@+id/rdgEd"
+                android:layout_width="fill_parent"
+                android:layout_weight="1"
+                android:layout_height="wrap_content" >
+
+                <RadioButton
+                    android:id="@+id/radio0"
+                    android:layout_width="fill_parent"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="0 a 12" />
+
+                <RadioButton
+                    android:id="@+id/radio1"
+                    android:layout_width="fill_parent"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="13 a 15" />
+
+                <RadioButton
+                    android:id="@+id/radio2"
+                    android:layout_width="fill_parent"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="16 a 18" />
+
+                <RadioButton
+                    android:id="@+id/radio3"
+                    android:layout_width="fill_parent"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="+ de 18" />
+            </RadioGroup>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_weight="1"
+            android:layout_height="wrap_content" >
+
+            <Button
+                android:id="@+id/button1"
+                android:layout_width="fill_parent"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Enviar" />
+
+            <Button
+                android:id="@+id/button2"
+                android:layout_width="fill_parent"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text="Omitir" />
+
+        </LinearLayout>
+    </LinearLayout>
 
 </RelativeLayout>

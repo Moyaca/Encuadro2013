@@ -13,30 +13,24 @@
         android:id="@+id/btnEscO"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/btnEscS"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="132dp"
+        android:layout_marginTop="81dp"
         android:background="@drawable/btn_animation"
-        android:text="Obras" />
-
-    <Button
-        android:id="@+id/btnPause"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/btnEscS"
-        android:layout_below="@+id/btnEscS"
-        android:layout_marginTop="40dp"
-        android:background="@drawable/btn_animation"
-        android:text="Zonas" />
+        android:text="Obras"
+        android:textSize="30dp" />
 
     <Button
         android:id="@+id/btnEscS"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/btnEscO"
+        android:layout_alignRight="@+id/btnEscO"
         android:layout_below="@+id/btnEscO"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="49dp"
+        android:layout_marginTop="100dp"
         android:background="@drawable/btn_animation"
-        android:text="Salas" />
+        android:text="Salas"
+        android:textSize="30sp" />
 
 </RelativeLayout>

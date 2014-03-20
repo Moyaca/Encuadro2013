@@ -6,6 +6,155 @@ import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
 public class Consumirws {
+	 public String getpuntajes(){
+			String SOAP_ACTION = "http://10.0.2.109/server_php/server_php.php/getpuntajes";
+		    String NAMESPACE = "http://10.0.2.109/server_php/";
+		    String METHOD_NAME = "getpuntajes";
+		    String URL = "http://10.0.2.109/server_php/server_php.php?wsdl";
+	    
+	    SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+
+		SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(	SoapEnvelope.VER11);
+
+		envelope.setOutputSoapObject(request);
+		envelope.dotNet = true;
+
+		try {
+			HttpTransportSE androidHttpTransport = new HttpTransportSE(URL);
+
+			// this is the actual part that will call the webservice
+			androidHttpTransport.call(SOAP_ACTION, envelope);
+
+			// Get the SoapResult from the envelope body.
+			SoapObject result = (SoapObject) envelope.bodyIn;
+
+			if (result != null) {
+				// Get the first property and change the label text
+				return result.getProperty(0).toString();	
+			} else {
+				return "error:=>no se encontrosala=>";
+			}
+		} catch (Exception e) {
+			return "error =>" + e.toString();
+		}
+	   		
+	 }
+	 public String getPosicion(int id_visitante){
+			String SOAP_ACTION = "http://10.0.2.109/server_php/server_php.php/getposicion";
+		    String NAMESPACE = "http://10.0.2.109/server_php/";
+		    String METHOD_NAME = "getposicion";
+		    String URL = "http://10.0.2.109/server_php/server_php.php?wsdl";
+	    
+	    SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+
+	    request.addProperty("id_visitante", id_visitante);
+		SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(	SoapEnvelope.VER11);
+
+		envelope.setOutputSoapObject(request);
+		envelope.dotNet = true;
+
+		try {
+			HttpTransportSE androidHttpTransport = new HttpTransportSE(URL);
+
+			// this is the actual part that will call the webservice
+			androidHttpTransport.call(SOAP_ACTION, envelope);
+
+			// Get the SoapResult from the envelope body.
+			SoapObject result = (SoapObject) envelope.bodyIn;
+
+			if (result != null) {
+				// Get the first property and change the label text
+				return result.getProperty(0).toString();	
+			} else {
+				return "error:=>no se encontrosala=>";
+			}
+		} catch (Exception e) {
+			return "error =>" + e.toString();
+		}
+	   		
+	 }
+	 public String getHora(){
+			String SOAP_ACTION = "http://10.0.2.109/server_php/server_php.php/gethora";
+		    String NAMESPACE = "http://10.0.2.109/server_php/";
+		    String METHOD_NAME = "gethora";
+		    String URL = "http://10.0.2.109/server_php/server_php.php?wsdl";
+	    
+	    SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+
+		// Use this to add parameters
+
+		//request.addProperty("id_sala",idsala);
+
+		SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
+				SoapEnvelope.VER11);
+
+		envelope.setOutputSoapObject(request);
+		envelope.dotNet = true;
+
+		try {
+			HttpTransportSE androidHttpTransport = new HttpTransportSE(
+					URL);
+
+			// this is the actual part that will call the webservice
+			androidHttpTransport.call(SOAP_ACTION, envelope);
+
+			// Get the SoapResult from the envelope body.
+			SoapObject result = (SoapObject) envelope.bodyIn;
+
+			if (result != null) {
+				// Get the first property and change the label text
+				return result.getProperty(0).toString();	
+			} else {
+				return "error:=>no se encontrosala=>";
+			}
+		} catch (Exception e) {
+			return "error =>" + e.toString();
+		}
+	   		
+	 }
+	 public String FinJuego(Integer id_visitante,Integer id_juego, Integer puntaje, String nick_name){
+			String SOAP_ACTION = "http://10.0.2.109/server_php/server_php.php/finJuego";
+		    String NAMESPACE = "http://10.0.2.109/server_php/";
+		    String METHOD_NAME = "finJuego";
+		    String URL = "http://10.0.2.109/server_php/server_php.php?wsdl";
+	    
+	    SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+
+		// Use this to add parameters
+
+		request.addProperty("id_visitante",id_visitante);
+		request.addProperty("id_juego",id_juego);
+		request.addProperty("puntaje",puntaje);
+		request.addProperty("nick_name", nick_name);
+
+		SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
+				SoapEnvelope.VER11);
+
+		envelope.setOutputSoapObject(request);
+		envelope.dotNet = true;
+
+		try {
+			HttpTransportSE androidHttpTransport = new HttpTransportSE(
+					URL);
+
+			// this is the actual part that will call the webservice
+			androidHttpTransport.call(SOAP_ACTION, envelope);
+
+			// Get the SoapResult from the envelope body.
+			SoapObject result = (SoapObject) envelope.bodyIn;
+
+			if (result != null) {
+				// Get the first property and change the label text
+				return result.getProperty(0).toString();	
+			} else {
+				return "error:=>no se encontrosala=>";
+			}
+		} catch (Exception e) {
+			return "error =>" + e.toString();
+		}
+	   		
+	 }
+	 
 	public String getObraSala(int idsala){
 		String SOAP_ACTION = "http://10.0.2.109/server_php/server_php.php/getObraSala";
 	    String NAMESPACE = "http://10.0.2.109/server_php/";
@@ -617,55 +766,56 @@ public class Consumirws {
 	   		}
 	   		
 	   	}
-     public String Altavisita(String nacioV, String sexoV, String visita, String edadV){
-    		
- 		String SOAP_ACTION = "http://10.0.2.109/server_php/server_php.php/Altavisita";
- 	    String NAMESPACE = "http://10.0.2.109/server_php/";
- 	    String METHOD_NAME = "Altavisita";
- 	    String URL = "http://10.0.2.109/server_php/server_php.php?wsdl";
- 	    
- 	    SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
-
- 		// Use this to add parameters
-      
- 	    
- 		request.addProperty("nacionalidad", nacioV);
- 		request.addProperty("sexo", sexoV);
- 		request.addProperty("tipo_visita", visita);
- 		request.addProperty("rango_edad", edadV);
-
- 		SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
- 				SoapEnvelope.VER11);
-
- 		envelope.setOutputSoapObject(request);
- 		envelope.dotNet = true;
-
- 		try {
- 			HttpTransportSE androidHttpTransport = new HttpTransportSE(
- 					URL);
-
- 			// this is the actual part that will call the webservice
- 			androidHttpTransport.call(SOAP_ACTION, envelope);
-
- 			// Get the SoapResult from the envelope body.
- 			SoapObject result = (SoapObject) envelope.bodyIn;
-
- 			if (result != null) {
- 				// Get the first property and change the label text
- 				return result.getProperty(0).toString();
- 				
- 				//nombreapp.setText("Nombre "+separated[0] +" id "+contents+ "desc. " + separated[1]);
-
- 				
- 			} else {
- 				return "error:=>no se encontrosala=>";
- 				
- 			}
- 		} catch (Exception e) {
- 			return "error =>" + e.toString();
- 		}
+	 public String Altavisita(String nacioV, String sexoV, String visita, String edadV){
  		
- 	}
+	 		String SOAP_ACTION = "http://10.0.2.109/server_php/server_php.php/Altavisita";
+	 	    String NAMESPACE = "http://10.0.2.109/server_php/";
+	 	    String METHOD_NAME = "Altavisita";
+	 	    String URL = "http://10.0.2.109/server_php/server_php.php?wsdl";
+	 	    
+	 	    SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+
+	 		// Use this to add parameters
+	      
+	 	    
+	 		request.addProperty("nacionalidad", nacioV);
+	 		request.addProperty("sexo", sexoV);
+	 		request.addProperty("tipo_visita", visita);
+	 		request.addProperty("rango_edad", edadV);
+
+	 		SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
+	 				SoapEnvelope.VER11);
+
+	 		envelope.setOutputSoapObject(request);
+	 		envelope.dotNet = true;
+
+	 		try {
+	 			HttpTransportSE androidHttpTransport = new HttpTransportSE(
+	 					URL);
+
+	 			// this is the actual part that will call the webservice
+	 			androidHttpTransport.call(SOAP_ACTION, envelope);
+
+	 			// Get the SoapResult from the envelope body.
+	 			SoapObject result = (SoapObject) envelope.bodyIn;
+
+	 			if (result != null) {
+	 				// Get the first property and change the label text
+	 				return result.getProperty(0).toString();
+	 				
+	 				//nombreapp.setText("Nombre "+separated[0] +" id "+contents+ "desc. " + separated[1]);
+
+	 				
+	 			} else {
+	 				return "error:=>no se encontrosala=>";
+	 				
+	 			}
+	 		} catch (Exception e) {
+	 			return "error =>" + e.toString();
+	 		}
+	 		
+	 	}
+	 
      public String BuscarPista(int idobra, int idjuego){
  		
  		String SOAP_ACTION = "http://10.0.2.109/server_php/server_php.php/BusquedaPista";
@@ -700,8 +850,6 @@ public class Consumirws {
  				// Get the first property and change the label text
  				return result.getProperty(0).toString();
  				
- 				//nombreapp.setText("Nombre "+separated[0] +" id "+contents+ "desc. " + separated[1]);
-
  				
  			} else {
  				return "error:=>no se encontrosala=>";
@@ -745,9 +893,6 @@ public class Consumirws {
     			if (result != null) {
     				// Get the first property and change the label text
     				return result.getProperty(0).toString();
-    				
-    				//nombreapp.setText("Nombre "+separated[0] +" id "+contents+ "desc. " + separated[1]);
-
     				
     			} else {
     				return "error:=>no se encontrosala=>";
@@ -802,120 +947,5 @@ public class Consumirws {
    		}
    		
    	}
-
-     public String getpuntajes(){
-			String SOAP_ACTION = "http://10.0.2.109/server_php/server_php.php/getpuntajes";
-		    String NAMESPACE = "http://10.0.2.109/server_php/";
-		    String METHOD_NAME = "getpuntajes";
-		    String URL = "http://10.0.2.109/server_php/server_php.php?wsdl";
-	    
-	    SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
-
-		SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(	SoapEnvelope.VER11);
-
-		envelope.setOutputSoapObject(request);
-		envelope.dotNet = true;
-
-		try {
-			HttpTransportSE androidHttpTransport = new HttpTransportSE(URL);
-
-			// this is the actual part that will call the webservice
-			androidHttpTransport.call(SOAP_ACTION, envelope);
-
-			// Get the SoapResult from the envelope body.
-			SoapObject result = (SoapObject) envelope.bodyIn;
-
-			if (result != null) {
-				// Get the first property and change the label text
-				return result.getProperty(0).toString();	
-			} else {
-				return "error:=>no se encontrosala=>";
-			}
-		} catch (Exception e) {
-			return "error =>" + e.toString();
-		}
-	   		
-	 }
-	 public String getHora(){
-			String SOAP_ACTION = "http://10.0.2.109/server_php/server_php.php/gethora";
-		    String NAMESPACE = "http://10.0.2.109/server_php/";
-		    String METHOD_NAME = "gethora";
-		    String URL = "http://10.0.2.109/server_php/server_php.php?wsdl";
-	    
-	    SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
-
-		// Use this to add parameters
-
-		//request.addProperty("id_sala",idsala);
-
-		SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
-				SoapEnvelope.VER11);
-
-		envelope.setOutputSoapObject(request);
-		envelope.dotNet = true;
-
-		try {
-			HttpTransportSE androidHttpTransport = new HttpTransportSE(
-					URL);
-
-			// this is the actual part that will call the webservice
-			androidHttpTransport.call(SOAP_ACTION, envelope);
-
-			// Get the SoapResult from the envelope body.
-			SoapObject result = (SoapObject) envelope.bodyIn;
-
-			if (result != null) {
-				// Get the first property and change the label text
-				return result.getProperty(0).toString();	
-			} else {
-				return "error:=>no se encontrosala=>";
-			}
-		} catch (Exception e) {
-			return "error =>" + e.toString();
-		}
-	   		
-	 }
-	 public String FinJuego(Integer id_visitante,Integer id_juego, Integer puntaje, String nick_name){
-			String SOAP_ACTION = "http://10.0.2.109/server_php/server_php.php/finJuego";
-		    String NAMESPACE = "http://10.0.2.109/server_php/";
-		    String METHOD_NAME = "finJuego";
-		    String URL = "http://10.0.2.109/server_php/server_php.php?wsdl";
-	    
-	    SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
-
-		// Use this to add parameters
-
-		request.addProperty("id_visitante",id_visitante);
-		request.addProperty("id_juego",id_juego);
-		request.addProperty("puntaje",puntaje);
-		request.addProperty("nick_name", nick_name);
-
-		SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
-				SoapEnvelope.VER11);
-
-		envelope.setOutputSoapObject(request);
-		envelope.dotNet = true;
-
-		try {
-			HttpTransportSE androidHttpTransport = new HttpTransportSE(
-					URL);
-
-			// this is the actual part that will call the webservice
-			androidHttpTransport.call(SOAP_ACTION, envelope);
-
-			// Get the SoapResult from the envelope body.
-			SoapObject result = (SoapObject) envelope.bodyIn;
-
-			if (result != null) {
-				// Get the first property and change the label text
-				return result.getProperty(0).toString();	
-			} else {
-				return "error:=>no se encontrosala=>";
-			}
-		} catch (Exception e) {
-			return "error =>" + e.toString();
-		}
-	   		
-	 }
 
 }

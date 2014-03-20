@@ -11,7 +11,8 @@ import android.view.View;
 import android.widget.Button;
 
 public class MainActivity extends Activity {
-	private Button buttonMan,buttonQR;
+	private Button buttonMan,buttonQR, btnProgreso;
+	private boolean back2=false;
 	ProgressDialog pDialog;
 	
 	@Override
@@ -21,6 +22,7 @@ public class MainActivity extends Activity {
 		
 		buttonMan = (Button) findViewById(R.id.btnEscO);
 		buttonQR = (Button) findViewById(R.id.btnEscS);
+		btnProgreso = (Button) findViewById(R.id.button1);
 		
 		buttonMan.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -40,6 +42,14 @@ public class MainActivity extends Activity {
 				startActivity(inten);
 			}
 		}); 
+		
+		btnProgreso.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent inten = new Intent(MainActivity.this, Progreso.class); 
+				startActivity(inten);
+			}
+		}); 
 	}
 	
 	@Override
@@ -52,20 +62,26 @@ public class MainActivity extends Activity {
 	//Listener para preguntar si sale con el botón back
 	@Override
 	public void onBackPressed() {
-	   System.out.println("OnBack");
-	   AlertDialog.Builder cartelsalida = new AlertDialog.Builder(MainActivity.this);
-	   cartelsalida.setTitle("Salir");
-	   cartelsalida.setMessage("¿Desea salir?");
-	   cartelsalida.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
-	    	public void onClick(DialogInterface dialog, int which) {
-	    		MainActivity.this.finish();
-	    	}
-	    });
-	   cartelsalida.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-	    	public void onClick(DialogInterface dialog, int which) {
-	    	}
-	    });
-	   cartelsalida.create();
-	   cartelsalida.show();
+		   System.out.println("OnBack " + back2);
+		   if(back2){
+			   MainActivity.this.finish();
+		   }else{
+			   back2=true;
+			   System.out.println("OnBack");
+			   AlertDialog.Builder cartelsalida = new AlertDialog.Builder(MainActivity.this);
+			   cartelsalida.setTitle("Salir");
+			   cartelsalida.setMessage("¿Desea salir?");
+			   cartelsalida.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+			    	public void onClick(DialogInterface dialog, int which) {
+			    		MainActivity.this.finish();
+			    	}
+			    });
+			   cartelsalida.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+			    	public void onClick(DialogInterface dialog, int which) {
+			    	}
+			    });
+			   cartelsalida.create();
+			   cartelsalida.show();
+		   }
 	}
 }

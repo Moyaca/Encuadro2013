@@ -31,6 +31,7 @@ public class Loader extends Activity {
 		editor.putInt("puntos",0);                          	//Puntos generado por el jugador a cada encuentro de obra
 		editor.putInt("idjuego",0);                         	//Id del juego 
 		editor.putInt("idvisitante",0);                         //Id del visitante 
+		editor.putString("tiempoinicio", "00:00:00");
 		editor.commit();
 		
 		ImageView img = (ImageView)findViewById(R.id.imageView1);

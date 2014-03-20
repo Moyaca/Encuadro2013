@@ -1,12 +1,15 @@
 package com.example.qr;
 
 import android.app.Activity;
+import android.media.MediaPlayer;
+import android.media.MediaPlayer.OnErrorListener;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.MediaController;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 public class ReproducirVideo extends Activity {
@@ -19,15 +22,31 @@ public class ReproducirVideo extends Activity {
 		
 		Bundle extras = getIntent().getExtras();
 		String video = extras.getString("video");
-
 		VideoView videoView = (VideoView)findViewById(R.id.videoView1);
-	    MediaController mc = new MediaController(this);
-	    videoView.setMediaController(mc);
-	    System.out.println("video: "+video);
-	    Uri uri = Uri.parse(video);
-	    videoView.setVideoURI(uri);
-	    videoView.requestFocus();
-	    videoView.start();
+		
+		try {
+		    
+			MediaController mc = new MediaController(this);
+		    videoView.setMediaController(mc);
+		    
+		    Uri uri = Uri.parse(video);
+		    videoView.setVideoURI(uri);
+		    videoView.requestFocus();
+		    
+		    videoView.start();
+		    
+		} catch (Exception e) {
+			Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
+			super.finish();
+		}
+		
+	}
+	
+	protected void onPause(){
+		 super.onPause();
+		VideoView videoView = (VideoView)findViewById(R.id.videoView1);
+//		videoView.
+		videoView.pause();
 	}
 	
 	@Override

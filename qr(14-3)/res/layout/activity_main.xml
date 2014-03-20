@@ -28,4 +28,14 @@
         android:layout_marginTop="34dp"
         android:text="@string/qr" />
 
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/btnEscS"
+        android:layout_alignRight="@+id/btnEscS"
+        android:layout_below="@+id/btnEscS"
+        android:layout_marginTop="40dp"
+        android:text="Progreso del Juego" />
+
 </RelativeLayout>

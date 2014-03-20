@@ -23,5 +23,12 @@
     <string name="title_activity_rasala">RASala</string>
     <string name="title_activity_estadistica">Estadistica</string>
     <string name="title_activity_loader">Loader</string>
-
+    <string name="title_activity_progreso">Progreso</string>
+    <string name="title_activity_puntajes">Puntajes</string>
+    <string name="btn_fin_juego">Finalizar Juego</string>
+    <string name="btn_puntaje">Ver Puntajes</string>
+    <string name="ultima_pista">Ultima Pista:</string>
+    <string name="cant_obras">Obras: 0/0</string>
+    <string name="tiempo">Tiempo: 00:00:00</string>
+    
 </resources>

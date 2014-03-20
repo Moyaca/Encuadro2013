@@ -1,0 +1,7 @@
+se agrego elformulario del jeanka con omitir
+progreso del juego y puntajes
+Streaming de video con pantalla completa
+
+fin juego en obra quedo (creo)
+
+le eche un vistaso a el codigo en jeneral y es un desastre, en serio bastante malo ( que gaston no lo vea)
