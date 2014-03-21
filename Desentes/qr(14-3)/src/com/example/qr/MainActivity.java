@@ -78,6 +78,7 @@ public class MainActivity extends Activity {
 			    });
 			   cartelsalida.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
 			    	public void onClick(DialogInterface dialog, int which) {
+			    		back2=false;
 			    	}
 			    });
 			   cartelsalida.create();

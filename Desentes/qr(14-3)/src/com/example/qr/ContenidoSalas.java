@@ -92,6 +92,8 @@ public class ContenidoSalas extends Activity {
 			public void onClick(View v) {
                 Intent intent =  new Intent(MediaStore.ACTION_IMAGE_CAPTURE);    	
                 int code = TAKE_PICTURE;
+            	Uri output = Uri.fromFile(new File(dirFoto));
+            	intent.putExtra(MediaStore.EXTRA_OUTPUT, output);
                 startActivityForResult(intent, code);
 			}
 		});
@@ -127,9 +129,7 @@ public class ContenidoSalas extends Activity {
 		     		Bitmap bm = (Bitmap) data.getParcelableExtra("data");
 		     		//Modifico su tamaño
 					Bitmap reBm = getResizedBitmap(bm,400,300);
-					
 					try {
-							
 						FileOutputStream fos;
 						fos = new FileOutputStream(dirFoto);
 						reBm.compress(Bitmap.CompressFormat.JPEG, 100, fos);
