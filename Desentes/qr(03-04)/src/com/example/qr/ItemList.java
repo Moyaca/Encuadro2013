@@ -1,6 +1,6 @@
-package Listado_Items;
+package com.example.qr;
 
-public class ItemList extends Item {
+public class ItemList {
 	 
     private int puntaje;
     private String nombre;

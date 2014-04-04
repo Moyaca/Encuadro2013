@@ -1,4 +1,4 @@
-package Listado_Items;
+package com.example.qr;
 
 import java.util.List;
 
@@ -6,7 +6,7 @@ import Respuesta.Multiple_Opcion;
 import Respuesta.Respuesta;
 import Respuesta.Respuesta_Abierta;
 
-public class Pregunta extends Item {
+public class Pregunta{
 	private int id;
 	private String pregunta;
 	private List<Respuesta> res;

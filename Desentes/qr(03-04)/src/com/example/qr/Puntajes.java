@@ -1,12 +1,7 @@
 package com.example.qr;
 
-
 import java.util.ArrayList;
 import java.util.List;
-
-import Listado_Items.Item;
-import Listado_Items.ItemAdapter;
-import Listado_Items.ItemList;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
@@ -33,7 +28,7 @@ private int posicion_jugador=0;
 private Integer id_visitante =0;
 
 ListView lv;
-List<Item> items = new ArrayList();
+List<ItemList> items = new ArrayList();
 
 SharedPreferences prefs=null;
 
@@ -46,7 +41,7 @@ SharedPreferences prefs=null;
 		lv = (ListView)findViewById(R.id.listView1);
        
         prefs=getSharedPreferences("user",Context.MODE_PRIVATE);
-        id_visitante = prefs.getInt("idvisitante", 0);
+        id_visitante = prefs.getInt("idvisitante", 433);
         btn.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -96,11 +91,10 @@ SharedPreferences prefs=null;
 	
 	    @Override
 	    protected void onPostExecute(String result) {
-//	    	Toast.makeText(getBaseContext(), "result: " + result +" pos: " + posicion_jugador, Toast.LENGTH_LONG).show();
+	    	Toast.makeText(getBaseContext(), "result: " + result + " pos: " + posicion_jugador, Toast.LENGTH_LONG).show();
 	    	
 	    	
 	    	String[] separated = result.split("=>");
-	    	System.out.println("result: " +result +" "+ separated.length);
 	    	if(separated.length<2){
 	    		items.add(new ItemList(9999, "God"));
 	    	}else{

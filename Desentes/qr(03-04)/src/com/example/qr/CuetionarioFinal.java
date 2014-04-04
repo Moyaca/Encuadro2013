@@ -2,8 +2,6 @@ package com.example.qr;
 
 import java.util.ArrayList;
 import java.util.List;
-import Listado_Items.Item;
-import Listado_Items.Pregunta;
 import Respuesta.Multiple_Opcion;
 import Respuesta.Respuesta;
 import Respuesta.Respuesta_Abierta;
@@ -63,8 +61,7 @@ public class CuetionarioFinal extends Activity {
 			public void onClick(View v) {
 				Boolean falta_algo = false;
 				ll.clearFocus();
-				for (Item i: p) {
-					Pregunta pre = (Pregunta) i;
+				for (Pregunta pre: p) {
 //					Toast.makeText(getApplicationContext(), "any true:" + pre.anyTrue().toString() + " / nom: " + pre.getPregunta(), Toast.LENGTH_SHORT).show();
 					if(!pre.anyTrue())
 						falta_algo = true;

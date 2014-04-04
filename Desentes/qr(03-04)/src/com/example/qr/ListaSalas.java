@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RadioButton;
@@ -19,7 +20,7 @@ public class ListaSalas extends Activity {
 	private ListView lv1;
 	private EditText et1;
 	private Button b1;
-	private RadioButton rbdetalle;
+	private CheckBox chbObras;
 	Consumirws ws;
 	String[] separated;
 	ProgressDialog pDialog;
@@ -35,7 +36,7 @@ public class ListaSalas extends Activity {
 		b1.requestFocus();
 		b1.setFocusable(true);
 		b1.setFocusableInTouchMode(true);
-		rbdetalle = (RadioButton) findViewById(R.id.radioButton1);
+		chbObras = (CheckBox) findViewById(R.id.checkBox1);
 		
 		ws = new Consumirws();
 		
@@ -46,7 +47,7 @@ public class ListaSalas extends Activity {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View v, int posicion, long id) {
 				//String result =ws.getDataSalaNombre(lv1.getItemAtPosition(posicion).toString()); 				
-				if(rbdetalle.isChecked()==true){
+				if(chbObras.isChecked()==true){
 					ListaObrasSalasExecute lobs = new ListaObrasSalasExecute();
 					lobs.execute(lv1.getItemAtPosition(posicion).toString());
 					

@@ -51,12 +51,12 @@
         </LinearLayout>
     </ScrollView>
 
-    <RadioButton
-        android:id="@+id/radioButton1"
+    <CheckBox
+        android:id="@+id/checkBox1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:text="Detalle" />
+        android:text="Obras" />
 
 </RelativeLayout>

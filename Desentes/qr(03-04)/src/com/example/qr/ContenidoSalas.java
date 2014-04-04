@@ -126,7 +126,7 @@ public class ContenidoSalas extends Activity {
 		     		//Tomo la la imagen en bitmap
 		     		Bitmap bm = (Bitmap) data.getParcelableExtra("data");
 		     		//Modifico su tamaño
-					Bitmap reBm = getResizedBitmap(bm,400,300);
+					Bitmap reBm = getResizedBitmap(bm,600,600);
 					
 					try {
 							
@@ -205,8 +205,9 @@ public class ContenidoSalas extends Activity {
 		    	if(ftp.LoginObras()){	
 		    		if(ftp.subirImgObra(nombre,directorio)){
 		    			idObra = ws.getNombreObraDescriptor(Integer.parseInt(idDeSala), nombre);
-		    			if(idObra=="0"){
-		    				result = idObra;
+		    			
+		    			if(idObra.equals("0")){
+		    				result = "0";
 		    			}else{
 		    				result = ws.getDataObraId(Integer.parseInt(idObra));
 		    			}
@@ -223,7 +224,7 @@ public class ContenidoSalas extends Activity {
         	pDialog.dismiss();
 //        	System.out.print(" resultado :"+v);
 //        	Toast.makeText(getApplicationContext(), v, Toast.LENGTH_LONG).show();
-        	if(v=="0"){
+        	if(v.equals("0")){
         		Toast.makeText(getApplicationContext(),"Obra no encontrada: " + v, Toast.LENGTH_LONG).show();
         	}else{
 	        	Intent intent = new Intent(ContenidoSalas.this,ContenidoObras.class);

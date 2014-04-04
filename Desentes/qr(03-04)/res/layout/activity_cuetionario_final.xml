@@ -29,6 +29,8 @@
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:layout_weight="0"
-        android:text="Button" />
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:text="Enviar" />
 
 </LinearLayout>
