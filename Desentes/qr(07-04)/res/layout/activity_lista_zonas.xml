@@ -9,12 +9,11 @@
     tools:context=".ListaObras" >
 
     <ListView
-        android:id="@+id/listobras"
+        android:id="@+id/listView1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/editText1"
-        android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/btnEscO"
+        android:layout_alignRight="@+id/editText1"
         android:layout_below="@+id/editText1" >
 
     </ListView>
@@ -25,23 +24,29 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/editText1"
         android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:text="Buscar" >
-
-	</Button>
+        android:layout_toRightOf="@+id/editText1"
+        android:text="Buscar" />
 
     <EditText
         android:id="@+id/editText1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
         android:ems="10" >
 
+        <requestFocus />
     </EditText>
 
+    <RadioButton
+        android:id="@+id/radioButton1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/listView1"
+        android:layout_alignParentRight="true"
+        android:text="Detalle" />
+
     <ScrollView
-        android:id="@+id/scrollobras"
+        android:id="@+id/scrollView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/listView1"

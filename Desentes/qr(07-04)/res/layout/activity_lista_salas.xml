@@ -9,12 +9,11 @@
     tools:context=".ListaObras" >
 
     <ListView
-        android:id="@+id/listobras"
+        android:id="@+id/listsalas"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/editText1"
-        android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/btnEscO"
+        android:layout_alignRight="@+id/editText1"
         android:layout_below="@+id/editText1" >
 
     </ListView>
@@ -25,23 +24,19 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/editText1"
         android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:text="Buscar" >
-
-	</Button>
+        android:layout_toRightOf="@+id/editText1"
+        android:text="Buscar" />
 
     <EditText
         android:id="@+id/editText1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
         android:ems="10" >
-
     </EditText>
 
     <ScrollView
-        android:id="@+id/scrollobras"
+        android:id="@+id/scrollsalas"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/listView1"
@@ -55,5 +50,13 @@
             android:orientation="vertical" >
         </LinearLayout>
     </ScrollView>
+
+    <CheckBox
+        android:id="@+id/checkBox1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:text="Obras" />
 
 </RelativeLayout>
