@@ -23,7 +23,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:src="@drawable/ic_launcher" />
-<c
+
     <ScrollView
         android:id="@+id/textAreaScroller"
         android:layout_width="fill_parent"
@@ -33,8 +33,9 @@
         android:layout_below="@+id/imageView1"
         android:layout_marginBottom="5dp"
         android:layout_marginTop="5dp"
-        android:background="#f8fcff"
+        android:background="@drawable/gradient_box"
         android:scrollbars="vertical" >
+<!--         android:background="#f8fcff" -->
 
         <TextView
             android:id="@+id/tvDescripcionSala"

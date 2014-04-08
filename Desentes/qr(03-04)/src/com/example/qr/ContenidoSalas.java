@@ -24,6 +24,7 @@ import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.view.Menu;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -37,7 +38,7 @@ public class ContenidoSalas extends Activity {
 	
 	TextView tv1, tv2;
 	ImageView img;
-	Button btnSalaObra, btnRec, btnPlay;
+	Button btnSalaObra, btnRec, btnPlay, btnVideo;
 	ProgressDialog pDialog;
 	MediaPlayer mp;
 
@@ -56,6 +57,7 @@ public class ContenidoSalas extends Activity {
 		btnSalaObra = (Button) findViewById(R.id.btnObrasSala);
 		btnRec = (Button) findViewById(R.id.btnREC);
 		btnPlay = (Button) findViewById(R.id.btnAudio);
+		btnVideo = (Button) findViewById(R.id.btnVideo);
 		
 		Bundle extras = getIntent().getExtras();		
 		String[] separated = extras.getString("result").split("=>");
@@ -109,7 +111,19 @@ public class ContenidoSalas extends Activity {
 				}
 			}
 		});
+		
+		btnVideo.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				obtenerVideo nv = new obtenerVideo();
+				nv.execute();
+				
+			}
+		});
+		
 	}
+	
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -319,6 +333,46 @@ public class ContenidoSalas extends Activity {
         }
 }
 	
+	class obtenerVideo extends AsyncTask<String,String,String>{
+	    @Override
+	    protected void onPreExecute() {
+	    	pDialog = new ProgressDialog(ContenidoSalas.this);
+			pDialog.setMessage("Espere por favor...");
+			pDialog.setIndeterminate(false);
+			pDialog.setCancelable(false);
+			pDialog.show();
+	    }
+	
+	    @Override
+	    protected String doInBackground(String... params) {
+	    	String video="";
+	    	try {
+	    		video=ws.getVideoSalaId(Integer.parseInt(idsala));
+	    		
+			} catch (Exception e) {
+				System.out.println("Error: " + e);
+			}
+	    	return video;
+	    }
+	
+	    @Override
+	    protected void onPostExecute(String video) {
+	    	pDialog.dismiss();
+	    	if(video.equals("0")){
+				Toast.makeText(getApplicationContext(), "No se a encontrado video", Toast.LENGTH_SHORT).show();
+			}
+			else{
+//El resto esta comentado por que no existe video en BD	
+				Toast.makeText(getApplicationContext(), "Return: " + video, Toast.LENGTH_SHORT).show();
+				
+//				String url="http://10.0.2.109/obras/"+idsala+"/video/"+video+".mp4";
+//				Intent i= new Intent(ContenidoSalas.this, ReproducirVideo.class);
+//				i.putExtra("video",url);
+//				startActivity(i);
+			}
+	    	pDialog.dismiss();
+	    }
+	}
 	public void destruir() {
         if (mp != null)
             mp.release();

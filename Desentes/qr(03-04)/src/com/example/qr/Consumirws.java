@@ -478,6 +478,45 @@ public class Consumirws {
 		}
     }
     
+    public String getVideoSalaId(int idsala){
+		String SOAP_ACTION = "http://10.0.2.109/server_php/server_php.php/getVideoSalaId";
+	    String NAMESPACE = "http://10.0.2.109/server_php/";
+	    String METHOD_NAME = "getVideoSalaId";
+	    String URL = "http://10.0.2.109/server_php/server_php.php?wsdl";
+	    
+	    SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+	
+		// Use this to add parameters
+	
+		request.addProperty("id_sala",idsala);
+	
+		SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
+				SoapEnvelope.VER11);
+	
+		envelope.setOutputSoapObject(request);
+		envelope.dotNet = true;
+	
+		try {
+			HttpTransportSE androidHttpTransport = new HttpTransportSE(
+					URL);
+	
+			// this is the actual part that will call the webservice
+			androidHttpTransport.call(SOAP_ACTION, envelope);
+	
+			// Get the SoapResult from the envelope body.
+			SoapObject result = (SoapObject) envelope.bodyIn;
+	
+			if (result != null) {
+				// Get the first property and change the label text
+				return result.getProperty(0).toString();
+			} 
+			else {
+				return "error:=>no se encontrosala=>";
+			}
+		} catch (Exception e) {
+			return "error =>" + e.toString();
+		}
+    }
 	public String getDataSala(int idsala){
 		String SOAP_ACTION = "http://10.0.2.109/server_php/server_php.php/getDataSalaId";
 	    String NAMESPACE = "http://10.0.2.109/server_php/";

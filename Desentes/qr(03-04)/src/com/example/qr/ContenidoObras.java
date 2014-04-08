@@ -103,27 +103,10 @@ public class ContenidoObras extends Activity {
 		    			
 			    		System.out.println("Progreso: "+progreso+" - Cantidad "+cantobra);
 			    		if((progreso+1)==cantobra){
-//			    			AlertDialog.Builder builderfinalizado = new AlertDialog.Builder(ContenidoObras.this);
-//			    			builderfinalizado.setTitle("¡Excelente!");
-//			    			builderfinalizado.setMessage("¡Felicitaciones! ¡Última obra encontrada!");
-//			    			builderfinalizado.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
-//			    				public void onClick(DialogInterface dialog, int which) {
-//			    					//Acá se finaliza el juego y se setean los puntos.
-//			    					editor.putInt("estajugando",0); // id del juego 
-//			    					editor.commit();
 			    			
 			    					Mensaje_Fin();
-			    					
-			    					
-//			    				}
-//			    			});
-//			    			builderfinalizado.create();
-//			    			builderfinalizado.show();
 			    		}
 			    		else {
-			    			
-			    			// idj es el ide del juego tomado de la secion, ya que obraexistente( id del juego en memoria) se reinicia luego de tomar cada foto
-			    			//por esodaba error obraexistente tenia valor = ""
 			    			
 			    			BuscarPista bp = new BuscarPista();
 		                	System.out.println("Buscarpista: "+idobra.toString()+" - "+idjuego);
@@ -309,14 +292,7 @@ public class ContenidoObras extends Activity {
 //		System.out.print( "Entro a descargarVideo\n");
 		obtenerNombreVideo name = new obtenerNombreVideo();
 		name.execute();
-		if (name != null && name.getStatus() == AsyncTask.Status.FINISHED) {
-			if (nombre.equals("")){
-		    	Toast.makeText(this, "No se pudo obtener el nombre de video", Toast.LENGTH_LONG).show();
-			}
-			else {
-		    	Toast.makeText(this, "El video es: "+ nombre, Toast.LENGTH_LONG).show();
-			}
-	    }
+		
 	}
 	
 	class obtenerNombreVideo extends AsyncTask<String,String,String>{
@@ -345,24 +321,22 @@ public class ContenidoObras extends Activity {
 	    @Override
 	    protected void onPostExecute(String video) {
 	    	pDialog.dismiss();
-	    	if(video.equals("")){
-				nombre="";
+	    	
+			if (video.equals("null") || video.equals("")){
+		    	Toast.makeText(getApplicationContext(), "No se pudo obtener el nombre de video", Toast.LENGTH_LONG).show();
 			}
-			else{
+			else {
+		    	Toast.makeText(getApplicationContext(), "El video es: "+ nombre, Toast.LENGTH_LONG).show();
+				
 				String[] nombrevideo = video.split("/");
 				String videoconformato= nombrevideo[5];
 				String[] videosinformato = videoconformato.split("\\.");
 				
-//				System.out.println("nombrevideo: "+nombrevideo[5]);
-//				System.out.println("videoconformato: "+videoconformato);
 				
-				System.out.println("videosinformato0: "+videosinformato[0]);
-//				System.out.println("videosinformato1: "+videosinformato[1]);
 				String url="http://10.0.2.109/obras/"+idObra+"/video/"+videosinformato[0]+".mp4";
 				Intent i= new Intent(ContenidoObras.this, ReproducirVideo.class);
 				i.putExtra("video",url);
 				startActivity(i);
-	        	pDialog.dismiss();
 			}
 	    	pDialog.dismiss();
 	    }
