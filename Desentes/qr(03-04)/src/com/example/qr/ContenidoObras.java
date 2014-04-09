@@ -349,13 +349,10 @@ public class ContenidoObras extends Activity {
  
         @Override
         protected String doInBackground(String... params) {
-        	System.out.println("obraperteneceajuego");
-        	System.out.println("Params:"+params[0]);
         	String result2 ="";
         	String result="";
         	try {
         		Consumirws ws = new Consumirws();
-        		System.out.println("Obraperteneceajuego de: " + params[0]);
         		result =ws.ObraPerteneceAJuego(Integer.parseInt(params[0]));
         		result2 = result+"=>"+params[0];
 			} catch (Exception e) {
@@ -367,13 +364,10 @@ public class ContenidoObras extends Activity {
  
         @Override
         protected void onPostExecute(String result) {
-        	System.out.println("Obraperteneceajuego postexecute: " + result);
         	pDialog.dismiss();
         	String[] separated = result.split("=>");
         	idjuego=Integer.parseInt(separated[0]);
-        	System.out.println("Obraperteneceajuego postexecute: " + idjuego);
         	idObra=separated[1];
-        	System.out.println("async obraexiste" + idjuego);
 			Jugar(idjuego);										//Llamo a la función jugar para que el async termine sus funciones antes.
         }
     }
@@ -390,11 +384,9 @@ public class ContenidoObras extends Activity {
  
         @Override
         protected String doInBackground(String... params) {
-        	System.out.println("buscarpista");
         	String result ="";
         	try {
         		Consumirws ws = new Consumirws();
-        		System.out.println("Params0: "+ params[0]+ " - Params1: " + params[1]);
         		result =ws.BuscarPista(Integer.parseInt(params[0]),Integer.parseInt(params[1]));
         		//le pido al servidor la hora y la guardo en sesion
         		String tiempo = ws.getHora();
@@ -408,7 +400,6 @@ public class ContenidoObras extends Activity {
  
         @Override
         protected void onPostExecute(String result) {
-        	System.out.println("Resultado " + result);
         	pDialog.dismiss();
         	String[] separated = result.split("=>");
         	editor.putInt("obrasig", Integer.parseInt(separated[0]));
@@ -441,7 +432,6 @@ public class ContenidoObras extends Activity {
  
         @Override
         protected void onPostExecute(String result) {
-        	System.out.println("Cantidad obras: " + result);
         	editor.putInt("cantidadobras", Integer.parseInt(result));
         	editor.putInt("progreso", 1);
         	editor.commit();
@@ -452,7 +442,7 @@ public class ContenidoObras extends Activity {
 
     	if (idjuego==0){
 			//La obra no tiene juego.
-			Toast.makeText(getApplicationContext(), "La obra no tiene juego.", Toast.LENGTH_SHORT).show();
+			//Toast.makeText(getApplicationContext(), "La obra no tiene juego.", Toast.LENGTH_SHORT).show();
 		}
 		else {			
 			//Si la obra tiene juego

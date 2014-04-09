@@ -70,14 +70,14 @@ public class Progreso extends Activity{
 		
 		try{
 			if(pista.equals("") || tiempo_inicio.equals("00:00:00") || progreso.equals(0) || jugando==0 || id_visitante==0 || id_juego==0){
-				Toast.makeText(this, pista + " / " + tiempo_inicio + " / " + progreso + "-" + total_obras + " / " + jugando + " / " + id_visitante + " / " + id_juego, Toast.LENGTH_LONG).show();
+				//Toast.makeText(this, pista + " / " + tiempo_inicio + " / " + progreso + "-" + total_obras + " / " + jugando + " / " + id_visitante + " / " + id_juego, Toast.LENGTH_LONG).show();
 				btn_fin_juego.setEnabled(false);
 				int hours = 0;
 	            int minutes = 0;
 	            int seconds = 0;
 	            date1 = simpleDateFormat.parse(hours+":"+minutes+":"+seconds);
 			}else{
-				Toast.makeText(this, pista + " / " + tiempo_inicio + " / " + progreso + "-" + total_obras + " / " + jugando + " / " + id_visitante, Toast.LENGTH_LONG).show();
+				//Toast.makeText(this, pista + " / " + tiempo_inicio + " / " + progreso + "-" + total_obras + " / " + jugando + " / " + id_visitante, Toast.LENGTH_LONG).show();
 				
 				TextView tv_cant_obras = (TextView) findViewById(R.id.textView2);
 				tv_cant_obras.setText("Obras: " + progreso.toString() + "/" + total_obras.toString());
@@ -250,12 +250,7 @@ public class Progreso extends Activity{
 		
 		@Override
 		protected void onPostExecute(String result) {
-			Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
-//			editor.putInt("progreso", 0);
-//			editor.putInt("cantidadobras", 0);
 			editor.putInt("estajugando", 0);
-//			editor.remove("pista");
-//			editor.remove("tiempoinicio");
 			editor.commit();
 			
 			Button btn_fin_juego= (Button)findViewById(R.id.button1);

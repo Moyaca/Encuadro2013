@@ -8,37 +8,40 @@
 
   <ImageView
         android:id="@+id/imageView1"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         android:layout_marginTop="3dp"
         android:layout_gravity="center|top"
-        android:layout_weight="1"
+        android:layout_weight="4"
         android:src="@drawable/ic_launcher" />
             
-
+<LinearLayout 	    
+    	android:layout_width="fill_parent"
+	    android:layout_height="fill_parent" 
+	    android:layout_weight="6"
+	    android:orientation="vertical">
          
-  <TextView
-      android:id="@+id/textView1"
-      android:layout_width="fill_parent"
-      android:layout_height="wrap_content"
-      android:layout_weight="0.7"
-      android:layout_marginLeft="5dp"
-      android:text="Nombre: "
-      android:textAppearance="?android:attr/textAppearanceLarge"
-      android:textStyle="bold" />
-  
-  <TextView
-      android:id="@+id/textView2"
-      android:layout_width="fill_parent"
-      android:layout_height="wrap_content"
-      android:layout_weight="0.7"
-      android:layout_marginLeft="5dp"
-      android:text="Autor: " />
+	  <TextView
+	      android:id="@+id/textView1"
+	      android:layout_width="fill_parent"
+	      android:layout_height="wrap_content"
+	      android:layout_marginLeft="5dp"
+	      android:text="Nombre: "
+	      android:textAppearance="?android:attr/textAppearanceLarge"
+	      android:textStyle="bold" />
+	  
+	  <TextView
+	      android:id="@+id/textView2"
+	      android:layout_width="fill_parent"
+	      android:layout_height="wrap_content"
+	      android:layout_marginLeft="5dp"
+	      android:text="Autor: " />
 		    
+  </LinearLayout>
      <ScrollView
          android:id="@+id/textAreaScroller"
          android:layout_width="fill_parent"
-         android:layout_height="wrap_content"
+         android:layout_height="fill_parent"
          android:layout_weight="5"
          android:layout_margin="5dp"
          android:background="@drawable/gradient_box"
@@ -46,8 +49,8 @@
 	    
 	    <TextView
 	        android:id="@+id/textView3"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
+	        android:layout_width="fill_parent"
+	        android:layout_height="fill_parent"
 	        android:layout_weight="1"
 	        android:text="@string/descripcion" />
 	    
@@ -56,8 +59,8 @@
     
 	<LinearLayout
 	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content" 
-	    android:layout_weight="1">
+	    android:layout_height="fill_parent" 
+	    android:layout_weight="6">
 
 	     <Button
 	        android:id="@+id/btnPlay"

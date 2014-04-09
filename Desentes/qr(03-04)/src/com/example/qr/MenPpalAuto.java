@@ -42,38 +42,28 @@ public class MenPpalAuto extends Activity {
 	
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent intent) { 
-		if (requestCode == 0) {
-			if (resultCode == RESULT_OK) {
-				String contenido = intent.getStringExtra("SCAN_RESULT");
-			   
-				Toast toast1 =Toast.makeText(getApplicationContext(),"Código: "+contenido, Toast.LENGTH_SHORT);
-				toast1.show();
-
-				QRExecuteObra qr = new QRExecuteObra();
-				qr.execute(contenido);
-			} 
-			else if (resultCode == RESULT_CANCELED) {
-				// Si se cancelo la captura...
-				System.out.print("Sacan Canceled");
-			}
-			System.out.print(intent.getAction());
-		}
-		
-		if (requestCode == 1) {
-			if (resultCode == RESULT_OK) {
-				String contenido = intent.getStringExtra("SCAN_RESULT");
-			   
-				Toast toast1 = Toast.makeText(getApplicationContext(), "Código: "+contenido, Toast.LENGTH_SHORT);
-				toast1.show();
+		if (resultCode == RESULT_OK) {
+			if (requestCode == 0) {
+			
+					String contenido = intent.getStringExtra("SCAN_RESULT");
+				   
+					Toast toast1 =Toast.makeText(getApplicationContext(),"Código: "+contenido, Toast.LENGTH_SHORT);
+					toast1.show();
+					
+					QRExecuteObra qr = new QRExecuteObra();
+					qr.execute(contenido);
+			}else if (requestCode == 1) {
+					String contenido = intent.getStringExtra("SCAN_RESULT");
+				   
+					Toast toast1 = Toast.makeText(getApplicationContext(), "Código: "+contenido, Toast.LENGTH_SHORT);
+					toast1.show();
+					
+					QRExecuteSala qr = new QRExecuteSala();
+					qr.execute(contenido);
 				
-				QRExecuteSala qr = new QRExecuteSala();
-				qr.execute(contenido);
-			} 
-			else if (resultCode == RESULT_CANCELED) {
-				// Si se cancelo la captura...
+			}else if (resultCode == RESULT_CANCELED) {
 				System.out.print("Sacan Canceled");
 			}
-			System.out.print(intent.getAction());
 		}
 	}
 

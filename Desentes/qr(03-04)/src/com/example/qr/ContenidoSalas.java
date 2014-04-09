@@ -135,7 +135,6 @@ public class ContenidoSalas extends Activity {
 	 @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		 if(resultCode==RESULT_OK){
 			 if (requestCode == TAKE_PICTURE) {
-		     		Toast.makeText(this, "TAKE_PICTURE", Toast.LENGTH_SHORT).show();
 
 		     		//Tomo la la imagen en bitmap
 		     		Bitmap bm = (Bitmap) data.getParcelableExtra("data");
@@ -236,10 +235,8 @@ public class ContenidoSalas extends Activity {
         @Override
         protected void onPostExecute(String v) {
         	pDialog.dismiss();
-//        	System.out.print(" resultado :"+v);
-//        	Toast.makeText(getApplicationContext(), v, Toast.LENGTH_LONG).show();
         	if(v.equals("0")){
-        		Toast.makeText(getApplicationContext(),"Obra no encontrada: " + v, Toast.LENGTH_LONG).show();
+        		Toast.makeText(getApplicationContext(),"Obra no encontrada, intentelo de nuevo", Toast.LENGTH_LONG).show();
         	}else{
 	        	Intent intent = new Intent(ContenidoSalas.this,ContenidoObras.class);
 	        	intent.putExtra("result", v);
@@ -275,10 +272,6 @@ public class ContenidoSalas extends Activity {
 		    		audio = separatedaudio[separatedaudio.length-1];
 		    		result = "Audio : " + audio + " ID: " + idSala;
 		    		
-//		    		result = ws.getContenidoSalaNombre(nombre);
-//		    		String separatedaux[] = result.split("=>");
-//		    		audio = separatedaux[0];
-		    		//result = "Audio : " + audio + " ID: " + idSala;
 		    		if(audio!=null){
 			    		if(ftp.getAudioSala(idSala, audio, true, 0)){
 			    			File fil = new File(ContenidoSalas.this.getCacheDir() + "/" + audio );
@@ -358,11 +351,11 @@ public class ContenidoSalas extends Activity {
 	    @Override
 	    protected void onPostExecute(String video) {
 	    	pDialog.dismiss();
-	    	if(video.equals("0")){
+	    	if(video.equals("0") || video.equals("null") || video.equals("")){
 				Toast.makeText(getApplicationContext(), "No se a encontrado video", Toast.LENGTH_SHORT).show();
 			}
 			else{
-//El resto esta comentado por que no existe video en BD	
+//				El resto esta comentado por que no existe video en BD	
 				Toast.makeText(getApplicationContext(), "Return: " + video, Toast.LENGTH_SHORT).show();
 				
 //				String url="http://10.0.2.109/obras/"+idsala+"/video/"+video+".mp4";

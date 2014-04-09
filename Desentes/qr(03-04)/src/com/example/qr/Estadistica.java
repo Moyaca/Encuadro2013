@@ -206,7 +206,7 @@ public class Estadistica extends Activity {
  
         @Override
         protected void onPostExecute(String v) {
-        	Toast.makeText(getApplicationContext(), v, Toast.LENGTH_LONG).show();
+        	
         	int id = Integer.parseInt(v);
         	if(id>0){
         		editor.putInt("idvisitante", id);

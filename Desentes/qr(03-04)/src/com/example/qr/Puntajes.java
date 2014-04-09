@@ -91,7 +91,6 @@ SharedPreferences prefs=null;
 	
 	    @Override
 	    protected void onPostExecute(String result) {
-	    	Toast.makeText(getBaseContext(), "result: " + result + " pos: " + posicion_jugador, Toast.LENGTH_LONG).show();
 	    	
 	    	
 	    	String[] separated = result.split("=>");
